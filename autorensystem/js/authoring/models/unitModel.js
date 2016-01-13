@@ -19,7 +19,7 @@ function Unit() {
 }
 
 // support "casting" a duck-typed JSON object to Parameter
-Unit.prototype.fromJSON = function(item) {
+Unit.prototype.fromJSON = function(item, scenario) {
     // copy all values (shallow copy)
     for (var i in item) this[i] = item[i];
 
@@ -29,6 +29,7 @@ Unit.prototype.fromJSON = function(item) {
         contextData.push(new ContextInformation().fromJSON(this._contextData[ic]));
     }
     this._contextData = contextData;
+    this._scenario = scenario;
 
     return this;
 };

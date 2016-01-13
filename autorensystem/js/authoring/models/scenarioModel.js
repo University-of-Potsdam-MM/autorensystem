@@ -18,7 +18,7 @@ Scenario.prototype.fromJSON = function(item) {
     // "cast" units to type Unit (deep copy)
     var units = [];
     for (var iu in this._units) {
-        units.push(new Unit().fromJSON(this._units[iu]));
+        units.push(new Unit().fromJSON(this._units[iu], this));
     }
     this._units = units;
 

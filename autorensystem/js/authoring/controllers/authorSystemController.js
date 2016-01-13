@@ -30,8 +30,6 @@ function initLoader() {
                     // TODO: Find out why this should be necessary. Seems inefficient, if not useless. EDIT: Agreed! (tobias).
                     // authorSystemContent.removeScenario(theScenario.getName());
                 });
-
-                console.log(JSON.stringify(authorSystemContent));
             }
         }
     });
