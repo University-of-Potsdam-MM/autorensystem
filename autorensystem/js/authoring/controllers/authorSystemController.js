@@ -14,6 +14,14 @@ function initLoader() {
     var paramURL = location.search.substr(1);
     paramURL = paramURL.replace(/%20/g, " ");
 
+    $.ajax({
+        url: "/loadFile",
+        type: "POST",
+        success: function(json) {
+            console.log(json);
+        }
+    });
+
     // get saved scenario data from loading process
     var savedData = JSON.parse(localStorage.getItem("saveData"));
 

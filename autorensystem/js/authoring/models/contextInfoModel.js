@@ -23,7 +23,7 @@ function ContextInformation() {
 // support "casting" a duck-typed JSON object to ContextInformation
 ContextInformation.prototype.fromJSON = function(item) {
     // copy all values (shallow copy)
-    for (i in item) this[i] = item[i];
+    for (var i in item) this[i] = item[i];
 
     // "cast" parameters to type Parameter (deep copy)
     var parameters = [], tempParams = this._parameters;

@@ -189,7 +189,7 @@ function initUnitClickEventHandler () {
         event.stopPropagation();
 
         //console.log(myAuthorSystem);
-        console.log(JSON.stringify(authorSystemContent));
+        //console.log(JSON.stringify(authorSystemContent));
     });
 }
 

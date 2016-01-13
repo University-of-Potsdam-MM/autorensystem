@@ -16,45 +16,32 @@ $(function() {
         var unit = $("#" + currentUnitUUID)[0];
         var current_unit = authorSystemContent.getUnitByUUID(currentUnitUUID);
         // default is all have to be satisfied
-        var unitSatisfiesAllContextInfos = current_unit.getSat();
 
         // decides that one of the group of selected context information has to be satisfied (1 == "Eine")
         if (e.val == 1) {
+            // check if icons exist
+            if ($(unit).children("div.unit-icons").children("div.unit-icon").length != 0) {
+                $(unit).children("div.unit-icons").css("border", "2px dotted #adadad");
 
-            // if a border already exists and is unequal to 1 --> change design
-            if (unitSatisfiesAllContextInfos) {
-                // check if icons exist
-                if ($(unit).children("div.unit-icons").children("div.unit-icon").length != 0) {
-                    $(unit).children("div.unit-icons").css("border", "2px dotted #adadad");
-
-                    // check if ci attribute exists and change attribute ci
-                    if ($(unit).children("div.unit-icons")[0].hasAttribute("ci")) {
-                        $(unit).children("div.unit-icons").attr("ci", "one");
-                    }
+                // check if ci attribute exists and change attribute ci
+                if ($(unit).children("div.unit-icons")[0].hasAttribute("ci")) {
+                    $(unit).children("div.unit-icons").attr("ci", "one");
                 }
             }
-            // false == one has to be satisfied
-            unitSatisfiesAllContextInfos = false;
 
             // change sat information in current unit
             current_unit.setSat("one");
         }
         // decides that all of the group of selected context information has to be satisfied (0 == "Alle")
         if (e.val == 0) {
+            if ($(unit).children("div.unit-icons").children("div.unit-icon").length != 0) {
+                $(unit).children("div.unit-icons").css("border", "2px solid #adadad");
 
-            // if a border already exists and is unequal to 0 --> change design
-            if (!unitSatisfiesAllContextInfos) {
-                if ($(unit).children("div.unit-icons").children("div.unit-icon").length != 0) {
-                    $(unit).children("div.unit-icons").css("border", "2px solid #adadad");
-
-                    // check if ci attribute exists and change attribute ci
-                    if ($(unit).children("div.unit-icons")[0].hasAttribute("ci")) {
-                        $(unit).children("div.unit-icons").attr("ci", "all");
-                    }
+                // check if ci attribute exists and change attribute ci
+                if ($(unit).children("div.unit-icons")[0].hasAttribute("ci")) {
+                    $(unit).children("div.unit-icons").attr("ci", "all");
                 }
             }
-            // true == all have to be satisfied
-            unitSatisfiesAllContextInfos = true;
 
             // change sat information in current unit
             current_unit.setSat("all");

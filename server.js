@@ -7,6 +7,7 @@ var app             =       express();
 var upload      	=   	multer({ dest: './uploads/'});
 var path 			= 		require("path");
 var passwordHash 	= 		require('password-hash');
+var fs 				= 		require('fs');
 //var mime = require("mime");
 
 
@@ -71,6 +72,32 @@ app.use(bodyParser.json());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/saveFile', function(req ,res) {
+	fs.writeFile("savedData.json", req.body.json, function(err) {
+	    if(err) {
+	        return console.log(err);
+	    }
+
+	    console.log("The file was saved!");
+		res.send("OK");
+	});
+});
+
+app.post('/loadFile', function(req, res) {
+	fs.stat('savedData.json', function(err, stat) {
+		if(err == null) {
+			fs.readFile('savedData.json', function (err, data) {
+				res.send(data.toString());
+			});
+		} else if(err.code == 'ENOENT') {
+			res.send("NO_SAVED_DATA");
+		} else {
+			console.log('Some other error: ', err.code);
+		}
+	});
+});
+
 
 app.post('/save', function(req, res){
 	var obj = {};
