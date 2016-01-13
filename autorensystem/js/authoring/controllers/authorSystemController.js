@@ -4,76 +4,53 @@
 
 
 function initLoader() {
-
     // after finishing the parsing, elements could be added into tab bar
     setContextTabListeners();
     //setScenarios();     // only needed if scenarios already exist at program start
     formatGlobalElements();
 
-    // get URL parameter
-    var paramURL = location.search.substr(1);
-    paramURL = paramURL.replace(/%20/g, " ");
-
     $.ajax({
         url: "/loadFile",
         type: "POST",
-        success: function(json) {
-            console.log(json);
+        success: function(response) {
+            console.log(response);
+            // saved data was found
+            if (response != "NO_SAVED_DATA") {
+                var loadedData = JSON.parse(response);
+
+                loadedData["_scenarioList"].forEach(function(theScenarioData) {
+                    var theScenario = new Scenario().fromJSON(theScenarioData);
+
+                    // load the scenario into the model
+                    loadSavedScenario(theScenario);
+
+                    // update scenario list
+                    updateScenario(theScenario.getName());
+
+                    // TODO: Find out why this should be necessary. Seems inefficient, if not useless. EDIT: Agreed! (tobias).
+                    // authorSystemContent.removeScenario(theScenario.getName());
+                });
+
+                console.log(JSON.stringify(authorSystemContent));
+            }
         }
     });
-
-    // get saved scenario data from loading process
-    var savedData = JSON.parse(localStorage.getItem("saveData"));
-
-    // get current scenario data
-    if (savedData != null && paramURL == savedData.name) {
-        loadedData = savedData;
-
-        // load scenario from JSON file
-        loadScenario(loadedData);
-
-        // update scenario list
-        updateScenario(loadedData.name);
-        //myAuthorSystem.splice(-1);
-        // TODO: Find out why this should be necessary. Seems inefficient, if not useless.
-        authorSystemContent.removeScenario(loadedData.name);
-    }
-
-    // only needed for testing
-    if (paramURL == "Testszenario") {
-
-        $.get('Testszenario.json', function (data) {
-            console.log(data);
-            //loadedData = data[0];
-            loadedData = data;
-
-            // load scenario from JSON file
-            loadScenario(loadedData);
-
-            // update scenario list
-            updateScenario(loadedData.name);
-            //myAuthorSystem.splice(-1)
-            authorSystemContent.removeScenario(loadedData.name);
-        });
-    }
 }
 
 
 /**
  * TODO: This whole function needs to be adjusted to changes in "data".
  * Function loads a scenario which contains all units, connections und functions.
- * @param {Object} data Contains all data from a scenario
+ * @param {Scenario} theScenario Contains all data from a scenario
  * */
-function loadScenario(data) {
-
+function loadSavedScenario(theScenario) {
     // get scenario in myAuthorSystem
-    //myAuthorSystem.push(data);
-    authorSystemContent.addScenario(data);
+    authorSystemContent.addScenario(theScenario);
 
     /* get scenario in menu */
     // create new container to see new scenario in menu bar
     var liScenario;
-    if (data["units"].length != 0) {
+    if (theScenario.hasUnits()) {
         liScenario = $('<li>').addClass('has-sub');
         liScenario.addClass("active");
     } else {
@@ -84,13 +61,13 @@ function loadScenario(data) {
     var spanClass = $('<span>').addClass('title');
 
     // append container in html file
-    spanClass.append(data.name);
+    spanClass.append(theScenario.getName());
     aClass.append(spanClass);
     liScenario.append(aClass);
     $("#cssmenu > ul").append(liScenario);
 
     // get the functionalities into the menu bar
-    /*liScenario.children("a").click(function() {
+    liScenario.children("a").click(function() {
         $(this).removeAttr('href');
         var element = $(this).parent('li');
 
@@ -107,7 +84,7 @@ function loadScenario(data) {
             element.siblings('li').find('li').removeClass('open');
             element.siblings('li').find('ul').slideUp();
         }
-    });*/
+    });
 
     // get units in menu
     if (liScenario.hasClass("has-sub")) {
@@ -115,50 +92,56 @@ function loadScenario(data) {
         // append a holder to toggle the menu bar
         liScenario.children("a").append('<span class="holder"></span>');
 
-        ulScenario = $("<ul>").attr("style", "display:none");
+        var ulScenario = $("<ul>").attr("style", "display:none");
 
         // put all units in scenario in menu bar
-        for (var i=0; i<data["units"].length; i++) {
-            var ulScenario;
+        theScenario.getUnits().forEach(function(theUnit) {
             var liUnit = $("<li>").addClass("last");
             var aUnit = $("<a>").attr("href", "#");
             var spanUnit = $("<span>");
 
             // append content name on DOM
-            spanUnit[0].innerText = data["units"][i].name;
+            spanUnit[0].innerText = theUnit.getName();
             aUnit.append(spanUnit);
             liUnit.append(aUnit);
             ulScenario.append(liUnit);
-        }
+        });
+
         liScenario.append(ulScenario);
     }
 
     // set container
     jsPlumb.setContainer($("#stm"));
 
-    // load units from scenario
-    var unitsList = data.getUnits();
+    // load units from the scenario
+    var unitsList = theScenario.getUnits();
     for (var j in unitsList) {
         loadUnit(unitsList[j], (j+1).toString());
     }
 
-    // set connections
-    for (var k=0; k<data["connections"].length; k++) {
+    // load connections from the scenario
+    theScenario.getConnections().forEach(function(theConnection) {
         var c = inst.connect({
-            source: data["connections"][k].sourceId,
-            target: data["connections"][k].targetId,
+            source: theConnection.getSourceId(),
+            target: theConnection.getTargetId(),
             anchors: ["Continuous", "Continuous"],
-            //overlays: [["Label", {label: "PRE", id: "label", cssClass: "aLabel" }]]
+            paintStyle: {
+                strokeStyle: "#5c96bc",
+                lineWidth: 1,
+                outlineColor: "transparent",
+                outlineWidth: 4
+            },
             overlays: [["Label", {
-                label: data["connections"][k].connLabel,
+                label: theConnection.getLabel(),
                 id: "label",
                 cssClass: "aLabel" }]]
         });
+
         // set title for label
         var label = c.getOverlay("label");
         var labelID = $(label)[0].canvas.id;
-        $("#" + labelID)[0].setAttribute("title", data["connections"][k].connTitle);
-    }
+        $("#" + labelID)[0].setAttribute("title", theConnection.getTitle());
+    });
 
     // activate quick add learning unit button (little navbar right)
     $("#navadd").css("pointer-events", "");
@@ -169,6 +152,5 @@ function loadScenario(data) {
     $("#navbarLearningUnit").css("color", "");
 
     // get name in current scenario label
-    $("#lname").html(data.name);
+    $("#lname").html(theScenario.getName());
 }
-

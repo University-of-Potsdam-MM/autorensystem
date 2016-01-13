@@ -9,7 +9,7 @@ function initPlumbCanvas() {
 
     inst = jsPlumb.getInstance({
         Endpoint: ["Dot", {radius: 2}],
-        HoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 2 },
+        HoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 1 },
         ConnectionOverlays: [
             [ "Arrow", {
                 location: 1,
@@ -94,9 +94,7 @@ function initPlumbCanvas() {
 
         // all tab content invisible
         showScenarioTab();
-
     });
-
 
     // triggered if add unit (plus icon) or create new unit in navigation bar was clicked
     $('#navadd,#createLearnUnit').click(createUnit);

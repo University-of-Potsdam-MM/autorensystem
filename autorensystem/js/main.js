@@ -10,9 +10,6 @@ var currentUnitUUID = "";
 var contextList = new ContextInfoList();
 var authorSystemContent = new AuthorSystemContent();
 
-// reloading
-var loadedData;
-
 // if jsPlumb is ready (wrapper for jQuery.ready which means DOM is fully loaded)
 jsPlumb.ready(function () {
 

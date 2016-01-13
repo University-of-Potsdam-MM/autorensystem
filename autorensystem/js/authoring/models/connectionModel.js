@@ -23,6 +23,13 @@ Connection.prototype.with = function(id, sourceId, targetId, label, title) {
     return this;
 };
 
+// support "casting" a duck-typed JSON object to ContextInformation
+Connection.prototype.fromJSON = function(item) {
+    // copy all values (shallow copy)
+    for (var i in item) this[i] = item[i];
+    return this;
+};
+
 // getter
 Connection.prototype.getID = function() {
     return this._ID;

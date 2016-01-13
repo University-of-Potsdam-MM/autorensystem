@@ -85,6 +85,12 @@ function createScenario() {
 
     // update scenario list and canvas
     updateScenario(scenarioName);
+
+    // add scenario to authoring system data model
+    var newScenario = new Scenario();
+    newScenario.setName(scenarioName);
+    authorSystemContent.addScenario(newScenario);
+
     setLabelBtnScenarioDeletion();
 
     // remove all units from state machine container
@@ -125,8 +131,4 @@ function updateScenario(name) {
 
     // update list with units per scenario
     //myAuthorSystem.push({name: name, units:[], connections:[]});
-
-    var newScenario = new Scenario();
-    newScenario.setName(name);
-    authorSystemContent.addScenario(newScenario);
 }

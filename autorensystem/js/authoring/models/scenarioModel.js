@@ -10,6 +10,28 @@ function Scenario() {
     return this;
 }
 
+// support "casting" a duck-typed JSON object to Parameter
+Scenario.prototype.fromJSON = function(item) {
+    // copy all values (shallow copy)
+    for (var i in item) this[i] = item[i];
+
+    // "cast" units to type Unit (deep copy)
+    var units = [];
+    for (var iu in this._units) {
+        units.push(new Unit().fromJSON(this._units[iu]));
+    }
+    this._units = units;
+
+    // "cast" connections to type Connection (deep copy)
+    var connections = [];
+    for (var ic in this._connections) {
+        connections.push(new Connection().fromJSON(this._connections[ic]));
+    }
+    this._connections = connections;
+
+    return this;
+};
+
 Scenario.prototype.getName = function() {
     return this._name;
 };
@@ -19,6 +41,10 @@ Scenario.prototype.setName = function(name) {
 
 Scenario.prototype.getUnits = function() {
     return this._units;
+};
+
+Scenario.prototype.hasUnits = function() {
+    return this._units.length > 0;
 };
 
 Scenario.prototype.getUnitByName = function(unitName) {

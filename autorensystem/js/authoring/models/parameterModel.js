@@ -17,6 +17,7 @@ function Parameter() {
 
 // support "casting" a duck-typed JSON object to Parameter
 Parameter.prototype.fromJSON = function(item) {
+    // copy all values (shallow copy)
     for (var i in item) this[i] = item[i];
     return this;
 };

@@ -18,6 +18,21 @@ function Unit() {
     return this;
 }
 
+// support "casting" a duck-typed JSON object to Parameter
+Unit.prototype.fromJSON = function(item) {
+    // copy all values (shallow copy)
+    for (var i in item) this[i] = item[i];
+
+    // "cast" units to type Unit (deep copy)
+    var contextData = [];
+    for (var ic in this._contextData) {
+        contextData.push(new ContextInformation().fromJSON(this._contextData[ic]));
+    }
+    this._contextData = contextData;
+
+    return this;
+};
+
 // getters
 Unit.prototype.getName = function() {
     return this._name;

@@ -58,6 +58,8 @@ function showLoadScenario() {
  * Loads the selected scenario.
  */
 function loadScenario() {
+    //TODO: check if obsolete
+    /*
     // get name of the selected scenario
     var selectedScenario = $("#s2id_listLoadScenarios")[0].innerText.slice(0, -1);
 
@@ -65,6 +67,7 @@ function loadScenario() {
     localStorage.setItem("saveData", JSON.stringify(thisScenario));
     // add name in URL
     $(location).attr("href", "?" + selectedScenario);
+    */
 
    /* // find right scenario
     for (var i=0; i<myAuthorSystem.length; i++) {
@@ -77,9 +80,11 @@ function loadScenario() {
         }
     }*/
 
+    /*
     // only for testing
     if (selectedScenario == "Testszenario") {
         // add name in URL
         $(location).attr("href", "?" + selectedScenario);
     }
+    */
 }

@@ -51,6 +51,11 @@ AuthorSystemContent.prototype.getScenario = function(scenarioName) {
     }
 };
 
+/**
+ *  Adds a new scenario object to the authoring system.
+ *
+ * @param {Scenario} scenario
+ */
 AuthorSystemContent.prototype.addScenario = function (scenario) {
     this._scenarioList.push(scenario);
 };

@@ -72,7 +72,7 @@ function loadUnit(unit, j) {
 
     currentUnitUUID = unit.getUUID();
     var newState = buildUnitDOM(currentUnitUUID, unit.getName());
-    var divContextIcons = newState.children(".unit-icons")[0];
+    var divContextIcons = $(newState.children(".unit-icons")[0]);
 
     // get all context information
     var unitContextInfoList = unit.getContextData();
@@ -159,10 +159,9 @@ function plumbUnit(newState) {
     inst.makeSource(ep, {
         parent: newState,
         anchor: "Continuous",
-        connector: [ "StateMachine", { curviness: 20 } ],
         connectorStyle: {
             strokeStyle: "#5c96bc",
-            lineWidth: 2,
+            lineWidth: 1,
             outlineColor: "transparent",
             outlineWidth: 4
         }
@@ -190,7 +189,7 @@ function initUnitClickEventHandler () {
 
         // workaround to avoid error message due to circular structure
         replaceScenarioReferencesWithNames();
-        console.log(JSON.stringify(authorSystemContent));
+        //console.log(JSON.stringify(authorSystemContent));
     });
 }
 
@@ -203,7 +202,7 @@ function activateUnit(unit) {
     // clear marking from all units
     clearMarkingFromLearningUnits();
     // unit is marked --> change color
-    $(unit).css("background", "#16a085");
+    $(unit).css("background", "#1e8151");
     $(unit).css("color", "white");
 
     // clear marking from label connections
