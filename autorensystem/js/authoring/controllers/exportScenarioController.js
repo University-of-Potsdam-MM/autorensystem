@@ -22,45 +22,32 @@ function exportScenario() {
     var JSONLD = authorSystemContent.getScenario(currentScenario).getABoxJSONLD();
 
     $.ajax({
-        url: "http://localhost:9998/owl/convert-from-json-ld",
+        url: "http://localhost:9998/noderules/get-adaptation-rules",
         type: "POST",
         contentType: "application/x-www-form-urlencoded",
-        data: {"jsonld": JSON.stringify(JSONLD)},
+        data: {"ontologyABox": JSON.stringify(JSONLD)},
         dataType: "text",
         success: function(response) {
+            console.log(response);
             $.ajax({
-                url: "http://localhost:9998/noderules/get-adaptation-rules",
+                url: "/createExport",
                 type: "POST",
-                contentType: "application/x-www-form-urlencoded",
-                data: {"ontologyABox": response},
-                dataType: "text",
+                data: {
+                    rules: response,
+                    content: JSON.stringify({})
+                },
                 success: function(response) {
-                    console.log(response);
-                    $.ajax({
-                        url: "/createExport",
-                        type: "POST",
-                        data: {
-                            rules: response,
-                            content: JSON.stringify({})
-                        },
-                        success: function(response) {
-                            alert("Export war erfolgreich.")
-                        },
-                        error: function(err, textStatus) {
-                            console.log(textStatus);
-                            alert("Fehler beim Speichern des Exports.")
-                        }
-                    });
+                    alert("Export war erfolgreich.")
                 },
                 error: function(err, textStatus) {
                     console.log(textStatus);
-                    alert("Fehler beim Erstellen der Adaptionsregeln.")
+                    alert("Fehler beim Speichern des Exports.")
                 }
             });
         },
         error: function(err, textStatus) {
             console.log(textStatus);
-            alert("Fehler beim Konvertieren der Autorensystemdaten.");
+            alert("Fehler beim Erstellen der Adaptionsregeln.")
         }
     });
 }
