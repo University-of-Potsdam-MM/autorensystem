@@ -10,7 +10,7 @@ function initLoader() {
     formatGlobalElements();
 
     $.ajax({
-        url: "/loadFile",
+        url: "/loadData",
         type: "POST",
         success: function(response) {
             console.log(response);

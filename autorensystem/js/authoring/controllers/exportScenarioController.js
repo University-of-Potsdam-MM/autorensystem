@@ -17,6 +17,8 @@ function exportScenario() {
         return false;
     }
 
+    replaceScenarioNamesWithReferences();
+
     var JSONLD = authorSystemContent.getScenario(currentScenario).getABoxJSONLD();
 
     $.ajax({
@@ -31,9 +33,24 @@ function exportScenario() {
                 type: "POST",
                 contentType: "application/x-www-form-urlencoded",
                 data: {"ontologyABox": response},
+                dataType: "text",
                 success: function(response) {
                     console.log(response);
-                    alert("Export war erfolgreich.")
+                    $.ajax({
+                        url: "/createExport",
+                        type: "POST",
+                        data: {
+                            rules: response,
+                            content: JSON.stringify({})
+                        },
+                        success: function(response) {
+                            alert("Export war erfolgreich.")
+                        },
+                        error: function(err, textStatus) {
+                            console.log(textStatus);
+                            alert("Fehler beim Speichern des Exports.")
+                        }
+                    });
                 },
                 error: function(err, textStatus) {
                     console.log(textStatus);

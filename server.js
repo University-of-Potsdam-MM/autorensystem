@@ -3,27 +3,29 @@
 var express         =       require("express");
 var session         = 		require('express-session');
 var multer          =       require('multer');
-var app             =       express();
-var upload      	=   	multer({ dest: './uploads/'});
 var path 			= 		require("path");
 var passwordHash 	= 		require('password-hash');
 var fs 				= 		require('fs');
+var Engine 			= 		require('tingodb')(), assert = require('assert');
+var bodyParser 		= 		require('body-parser');
+var ncp 			= 		require('ncp').ncp;
 //var mime = require("mime");
 
-
-
+var upload      	=   	multer({ dest: './uploads/'});
 
 var filenameoutput; 
 var pathtemp;
 
-app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
+var app = express();
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 //app.use('/',     express.static(path.join(__dirname, 'draggable')));
 /*app.use('/css',express.static(path.join(__dirname, 'autorensystem/css')));
 app.use('/fonts',express.static(path.join(__dirname, 'fonts')));
 app.use('/img',express.static(path.join(__dirname, 'img')));
 app.use('/js',express.static(path.join(__dirname, 'autorensystem/js')));
 */
-app.use('/',express.static(path.join(__dirname, 'autorensystem')));
+app.use('/', express.static(path.join(__dirname, 'autorensystem')));
 
 app.use(multer({ dest: './uploads/',
     rename: function (fieldname, filename) {
@@ -57,15 +59,6 @@ app.post('/upload',function(req,res){
     });
 });
 
-app.listen(3000,function(){
-    console.log("Working on port 3000");
-});
-
-
-
-var Engine = require('tingodb')(),
-    assert = require('assert');
-var bodyParser = require('body-parser');
 // parse application/json
 app.use(bodyParser.json());  
 //app.use(express.bodyParser());
@@ -73,7 +66,40 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/saveFile', function(req ,res) {
+app.post('/createExport', function(req, res) {
+	try {
+		fs.mkdirSync("./export");
+	} catch(e) {
+		// do nothing
+	}
+
+	fs.writeFile("./export/nodeRules.js", req.body.rules, function(err) {
+		if(err) {
+			return console.log(err);
+		}
+
+		console.log("Rules file was saved!");
+
+		fs.writeFile("./export/content.js", req.body.content, function(err) {
+			if(err) {
+				return console.log(err);
+			}
+
+			console.log("Content file was saved!");
+
+			ncp("./uploads", "./export/media", function (err) {
+				if (err) {
+					return console.error(err);
+				}
+
+				console.log('Uploaded media was copied!');
+				res.send("OK");
+			});
+		});
+	});
+});
+
+app.post('/saveData', function(req ,res) {
 	fs.writeFile("savedData.json", req.body.json, function(err) {
 	    if(err) {
 	        return console.log(err);
@@ -84,7 +110,7 @@ app.post('/saveFile', function(req ,res) {
 	});
 });
 
-app.post('/loadFile', function(req, res) {
+app.post('/loadData', function(req, res) {
 	fs.stat('savedData.json', function(err, stat) {
 		if(err == null) {
 			fs.readFile('savedData.json', function (err, data) {
@@ -274,6 +300,9 @@ app.post('/register',function(req,res){
 	res.end('done');
 });
 
+app.listen(3000,function(){
+	console.log("Working on port 3000");
+});
 
 function validatepassword(username, password) {
 /*var db = new Engine.Db('db', {});

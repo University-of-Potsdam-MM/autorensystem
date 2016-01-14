@@ -29,7 +29,7 @@ function showSaveScenario() {
     //var jsonLD = JSON.stringify(json ? json.getABoxJSONLD() : {});
 
     $.ajax({
-        url: "/saveFile",
+        url: "/saveData",
         type: "POST",
         data: {"json": JSON.stringify(authorSystemContent)},
         success: function() {
