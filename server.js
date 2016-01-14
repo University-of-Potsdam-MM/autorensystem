@@ -66,11 +66,11 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/createExport', function(req, res) {
+app.post('/saveExport', function(req, res) {
 	try {
 		fs.mkdirSync("./export");
 	} catch(e) {
-		// do nothing
+		// nothing to do here
 	}
 
 	fs.writeFile("./export/nodeRules.js", req.body.rules, function(err) {

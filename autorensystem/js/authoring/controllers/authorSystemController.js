@@ -73,8 +73,7 @@ function loadSavedScenario(theScenario) {
             element.removeClass('open');
             element.find('li').removeClass('open');
             element.find('ul').slideUp();
-        }
-        else {
+        } else {
             element.addClass('open');
             element.children('ul').slideDown();
             element.siblings('li').children('ul').slideUp();
@@ -86,7 +85,6 @@ function loadSavedScenario(theScenario) {
 
     // get units in menu
     if (liScenario.hasClass("has-sub")) {
-
         // append a holder to toggle the menu bar
         liScenario.children("a").append('<span class="holder"></span>');
 
@@ -136,6 +134,7 @@ function loadSavedScenario(theScenario) {
         });
 
         // set title for label
+        c.id = theConnection.getID();
         var label = c.getOverlay("label");
         var labelID = $(label)[0].canvas.id;
         $("#" + labelID)[0].setAttribute("title", theConnection.getTitle());

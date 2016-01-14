@@ -30,7 +30,7 @@ function exportScenario() {
         success: function(response) {
             console.log(response);
             $.ajax({
-                url: "/createExport",
+                url: "/saveExport",
                 type: "POST",
                 data: {
                     rules: response,

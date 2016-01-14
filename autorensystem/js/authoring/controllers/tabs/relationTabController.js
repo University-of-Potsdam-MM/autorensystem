@@ -53,6 +53,11 @@ $(function() {
 
 
 function fillRelationTab(connection) {
+    var scenarioName = $("#lname")[0].innerHTML;
+    var theScenario = authorSystemContent.getScenario(scenarioName);
+    var theConnection = theScenario.getConnectionByID(connection.id);
+    var sourceUnit = authorSystemContent.getUnitByUUID(theConnection.getSourceId());
+    var targetUnit = authorSystemContent.getUnitByUUID(theConnection.getTargetId());
 
     var label = connection.getOverlay("label");
     // update current label
@@ -60,13 +65,9 @@ function fillRelationTab(connection) {
 
     // test 'if (label.id == "label")' is obsolete since jsPlumb hands in parameter c : Connection
 
-    // get name of source and target unit
-    var sourceUnit = connection.source.parentElement.innerText;
-    var targetUnit = connection.target.innerText;
-
     // add names in relations labels
-    $("#preLabelRelations").html(sourceUnit + " ist eine");
-    $("#postLabelRelations").html("für " + targetUnit);
+    $("#preLabelRelations").html(sourceUnit.getName() + " ist eine");
+    $("#postLabelRelations").html("für " + targetUnit.getName());
 
     // clear markings from connection labels
     clearMarkingFromConnections();

@@ -75,7 +75,6 @@ function initPlumbCanvas() {
         activateConnection(c);
         // needed to prevent clicking the container as well
         e.stopPropagation();
-
     });
 
 
