@@ -12,9 +12,24 @@ $( document ).ready(function() {
 		$('html').keyup(function(e){
 			if(e.keyCode == 46) {
 				if (currentmarkedid != 0) {
+					var mediavalue1 = $('#'+currentmarkedid).data('mediavalue');
+					console.log("Medienwert:  " + mediavalue1);
+					if (mediavalue1 == "picture") {
+						removeMetaDataFromUnit("MD_IMAGE", $('#'+currentUnitUUID));
+					}
+					if (mediavalue1 == "video") {
+						removeMetaDataFromUnit("MD_FILM", $('#'+currentUnitUUID));
+					}
+					if (mediavalue1 == "sound") {
+						removeMetaDataFromUnit("MD_AUDIO", $('#'+currentUnitUUID));
+					}
+					if (mediavalue1 == "text") {
+						removeMetaDataFromUnit("MD_TEXT", $('#'+currentUnitUUID));
+					}
 					$('#' + currentmarkedid).remove();
 					unmarkmediaallmediaelements();
 					updateHTML();
+					
 				}
 			}
 		});
@@ -110,32 +125,39 @@ function initmediaelementfunctions() {
 					$(draggedelement).css({'width' : '100%'});
 				} else {
 					$( '#infotext' ).append('gedroppt');
-					$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="'+ currentdraggedtype +'"></div>');
 					if (currentdraggedtype == 'text') {
+						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="text"></div>');
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-text.png')"});
 						$('#'+tempid).html('<div class="textmediaoutput">Insert your text here</div>');
-
+						addMetaDataToUnit("MD_TEXT", $('#'+currentUnitUUID));
 					}
 					if (currentdraggedtype == 'picture') {
+						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="picture"></div>');
 						$('#'+tempid).css({'background-color' : 'LightBlue'});
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-pic.png')"});
 						//$('#'+tempid).css({'background' : 'LightBlue'});
 						//binduploadlistener(tempid, 'pictureelement');
 						//$('#'+tempid).html('<img src="img/designmode/potsdam2.jpg" class="pictureelement">');
+						addMetaDataToUnit("MD_IMAGE", $('#'+currentUnitUUID));
+						$('#'+tempid).data('mediavalue', 'picture');
 					}
 
 					if (currentdraggedtype == 'sound') {
+						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="sound"></div>');
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-sound.png')"});
 						$('#'+tempid).css({'background-color' : 'orange'});
-						//binduploadlistener(tempid, 'soundelement');
+						addMetaDataToUnit("MD_AUDIO", $('#'+currentUnitUUID));
+						$('#'+tempid).data('mediavalue', 'sound');
 					}
 
 					if (currentdraggedtype == 'video') {
+						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="video"></div>');
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-video.png')"});
 						/*$('#'+tempid).html('<video class="videoelement" controls="controls"><source src="tagesschau.mp4" type="video/mp4">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
 						*/
 						//binduploadlistener(tempid, 'videoelement');
-
+						addMetaDataToUnit("FILM", $('#'+currentUnitUUID));
+						$('#'+tempid).data('mediavalue', 'video');
 						//autoplay controls loop mute
 					}
 					setmediaicons(tempid);
