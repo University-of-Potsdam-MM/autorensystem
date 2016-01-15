@@ -100,14 +100,15 @@ function _showActiveTabContent(tab) {
         if (!bool_unitClicked) return false;
     }
     if ($(tab).hasClass("contentTab")) {
-        console.log(currentUnitUUID);
+        lastOpenedUnitTab = tab;
+        if (!bool_unitClicked) return false;
 
         changeToDesignMode();
         designmode = true;
 
         unmarkmediaallmediaelements();
 
-        loadorcreateGUIHTML(currentUnitUUID);
+        loadOrCreateGUIHTML(currentUnitUUID);
         resizegridcontainer();
     } else {
         changeToEditorMode();

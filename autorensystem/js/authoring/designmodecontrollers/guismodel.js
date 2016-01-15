@@ -1,9 +1,10 @@
 guis = [];
 
 function createNewGUI(unitid) {
-	var newGUIHTML = 	'<div id="gridcontainer" class="centered" data-ratioheight="3" data-ratiowidth="4" data-idcounter="0" data-padding="1" data-showborders="true" data-gridpadding="1" data-unitid="' + unitid + '" style="display:block"><div class="gridelement" value="0" style="width:100%;height:100%;top:0%;left:0%;" id="' + unitid + '">Test</div></div>';
+	var newGUIHTML = 	'<div id="gridcontainer" class="centered" data-ratioheight="3" data-ratiowidth="4" data-idcounter="0" data-padding="1" data-showborders="true" data-gridpadding="1" data-unitid="' + unitid + '" style="display:block"><div class="gridelement" value="0" style="width:100%;height:100%;top:0%;left:0%;" id="' + unitid + '"></div></div>';
 	//addHTML(unitid, newGUIHTML);
-	return newGUIHTML; 
+	$("#gridcontainer").replaceWith(newGUIHTML);
+	init2();
 }
 
 function addCurrentGUI() {
@@ -33,7 +34,7 @@ function getGUIIndex(unitid) {
 	 return out;
 }
 
-function loadorcreateGUIHTML(unitid) {
+function loadOrCreateGUIHTML(unitid) {
 	if (getGUIIndex(unitid) == -1) {
 		createNewGUI(unitid);
 		console.log("create: " + unitid);
@@ -49,11 +50,10 @@ function loadorcreateGUIHTML(unitid) {
 
 function getGUIHTML(unitid) {
 	 for (var i = 0; i < guis.length; i++) {
-		if (guis[i].unitid == unitid) {
-			json2grid(guis[i]);
-		}
+		 if (guis[i].unitid == unitid) {
+			 json2grid(guis[i]);
+		 }
 	 }
-	 init2();
 }
 
 function updateHTML() {
