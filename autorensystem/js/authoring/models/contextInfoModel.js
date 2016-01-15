@@ -15,7 +15,7 @@ function ContextInformation() {
     this._operators = [];
     this._chosenOperator = "";  // set by the author in unit editing
     this._enums = [];
-    this._units = [];
+    this._parameters = [];
 
     return this;
 }
@@ -26,12 +26,12 @@ ContextInformation.prototype.fromJSON = function(item) {
     for (var i in item) this[i] = item[i];
 
     // "cast" parameters to type Parameter (deep copy)
-    var parameters = [], tempParams = this._units;
+    var parameters = [], tempParams = this._parameters;
     for (var ip in tempParams) {
         var param = new Parameter().fromJSON(tempParams[ip]);
         parameters.push(param);
     }
-    this._units = parameters;
+    this._parameters = parameters;
 
     return this;
 };
@@ -78,7 +78,7 @@ ContextInformation.prototype.getEnums = function () {
 };
 
 ContextInformation.prototype.getParameters = function () {
-    return this._units;
+    return this._parameters;
 };
 
 // setters
@@ -126,15 +126,15 @@ ContextInformation.prototype.setEnums = function (enums) {
 };
 
 ContextInformation.prototype.setParameters = function (parameters) {
-    this._units = parameters;
+    this._parameters = parameters;
 };
 
 // reset all chosen values
 ContextInformation.prototype.resetAllValues = function() {
     this._chosenOperator = "";
     this._chosenValue = "";
-    for (var i in this._units)
-        this._units[i].resetValue();
+    for (var i in this._parameters)
+        this._parameters[i].resetValue();
 };
 
 
@@ -155,8 +155,8 @@ ContextInformation.prototype.getJSONLD = function () {
     // if this context information has parameters, get their JSON-LD named individual objects
     var parameterJSONLDList = [];
     var parameterReferenceJSONLDList = [];
-    for (var i in this._units) {
-        var parameterJSONLD = this._units[i].getJSONLD();
+    for (var i in this._parameters) {
+        var parameterJSONLD = this._parameters[i].getJSONLD();
         // add references to these named individuals to the context information individual
         parameterReferenceJSONLDList.push( {"@id" : parameterJSONLD["@id"]} );
         // add each parameter individual to the partial ontology graph

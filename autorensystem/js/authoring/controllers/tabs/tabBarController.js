@@ -91,11 +91,22 @@ function deactivateAllTabs() {
  */
 function _showActiveTabContent(tab) {
     // if no connection or unit has been clicked, show empty panel
-    if ($(tab).hasClass("relationTab") && !connectionIsClicked) return false;
+    if ($(tab).hasClass("relationTab") && !connectionIsClicked) {
+        return false;
+    }
     if ($(tab).hasClass("unitTab")) {
         // keep track of last opened tab
         lastOpenedUnitTab = tab;
         if (!bool_unitClicked) return false;
+    }
+    if ($(tab).hasClass("contentTab")) {
+        changeToDesignMode();
+        designmode = true;
+        resizegridcontainer();
+        unmarkmediaallmediaelements();
+    } else {
+        changeToEditorMode();
+        designmode = false;
     }
     $($(tab).attr("href")).show();
 }

@@ -80,7 +80,7 @@ function initPlumbCanvas() {
 
     // triggered if unit container, i.e. canvas is clicked
     $("#container").on("click", function() {
-        if (connectionIsClicked)
+        if (connectionIsClicked || designmode)
             return false;
 
         // clear marking from existing learning units

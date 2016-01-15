@@ -89,6 +89,7 @@
         <link rel="stylesheet" href="css/custom-icons.css">
         <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
         <link rel="stylesheet" href="css/flat-ui.css">
+
         <script type="text/javascript" src="js/vendor/flat-ui.js"></script>
 
 
@@ -104,7 +105,40 @@
         <!--<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>-->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.22&signed_in=false&libraries=places"></script>
 
+	<!-- tomsstuff -->
+				<!-- designmode -->
+        <link rel="stylesheet" href="css/designmode.css">
+		<link rel="stylesheet" href="css/textmediaoutput.css">
+		<!--link rel="stylesheet" href="css/contextmenu.css"-->
+		<script type="text/javascript" src="js/authoring/modeController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/designModeControllerMain.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/loadJSON.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/createJSON.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/login.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/guimanagement.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/resizeController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/divideController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/ratiosliderController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/paddingsliderController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/mediaElementController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/neighborhood.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/myContextMenu.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/guismodel.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/texteditorController.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/loader.js"></script>
+		<script type="text/javascript" src="js/authoring/designmodecontrollers/converterJsonHtml.js"></script>
+		<!--script type="text/javascript" src="js/authoring/designmodecontrollers/contextMenuController2.js"></script-->
+		<!--script type="text/javascript" src="js/authoring/designmodecontrollers/paddingController.js"></script-->
+		<script type="text/javascript" src="js/vendor/resize.js"></script>
+		<script type="text/javascript" src="js/vendor/Math.uuid.js"></script>
+		<script type="text/javascript" src="js/vendor/ckeditor/ckeditor.js"></script>
+
+
+		<!--script type="text/javascript" src="js/vendor/jquery.contextmenu.js"></script-->
+	<!-- /tomsstuff -->
+
     </head>
+
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -193,7 +227,16 @@
                     <!--<div class="content" id="stm">-->
                     <div id="stm">
                     </div>
+		<!--tomsstuff -->
+					<!--a href="#" onclick="changeToDesignMode()" id="tomtest">test</a-->
 
+						<div id="gridcontainer" class="centered" data-ratioheight="3" data-ratiowidth="4" data-idcounter="0" data-padding="1" data-showborders="true" data-gridpadding="1">
+							<div class="gridelement" value="0" style="width:100%;height:100%;top:0%;left:0%;" id="gridelement8" >
+								<!--div class="resizesnapper" style="background:black;height:100%;width:30px;position:absolute;left:40%;top:0px;"></div-->
+							</div>
+						</div>
+
+		<!--/tomsstuff -->
                 </div>
             </div>
 
@@ -204,7 +247,7 @@
                     <ul>
                         <li><a href="#tab0" title="Szenario" class="active scenarioTab fui-window"></a></li>
                         <li><a href="#tab1" title="Lerneinheit" class="unitTab fui-new"></a></li>
-                        <li><a href="#tab2" title="Metadaten" class="unitTab">M</a></li>
+                        <li><a href="#tab2" title="Metadaten" class="contentTab">M</a></li>
                         <li><a href="#tab3" title="Kontextinformationen" class="unitTab">K</a></li>
                         <li><a href="#tab4" title="Relation" class="relationTab">R</a></li>
                         <li><a href="#tab5" title="Simulator" class="simulatorTab fui-play2"></a></li>
@@ -231,29 +274,180 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tab2" class="tabContents unitTab">
-                        <form>
-                            <div>
-                                <div style="padding-bottom: 20px">
-                                    <label class="label-tabs label">Gewählt</label>
-                                    <select id="selectMultiMetaData" class="form-control multiselect multiselect-info" multiple="multiple" style="min-width: 235px">
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="label-tabs label">Auswahl Metadaten</label>
-                                    <select id="selectMetaData" class="form-control select select-primary select-block mbl" style="min-width: 235px;">
-                                        <option disabled selected>METADATEN</option>
-                                        <!--<option value="0">Bild</option>
-                                        <option value="1">Film</option>
-                                        <option value="2">Text</option>
-                                        <option value="3">Navigation</option>
-                                        <option value="4">Test</option>
-                                        <option value="5">Audio</option>-->
-                                    </select>
+                    <div id="tab2" class="tabContents contentTab">
+                        <div>
+                            <div id="designmodeProperties">
+                                <div id="mediampropertymenu">
+                                    <h6>Medien-Optionen</h6>
+
+                                    <div id="pageoptionmenu" class="optionsmenu" style="display:block;">
+                                        <p><b>Seiten-Optionen</b></p>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Bearbeitungsmodus</div>
+                                            <div class="panel-body">
+                                                <!--input type="checkbox" checked data-toggle="switch" name="custom-switch-text" data-on-text="Layout" data-off-text="Medien" id="mediamode"/-->
+                                                <fieldset>
+                                                    <input type="radio" id="mediamode" name="editormode" ><label for="mediamode">Medienmodus</label><br>
+                                                    <input type="radio" id="layoutmode" name="editormode" checked="checked"><label for="layoutmode">Layoutmodus</label><br>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <!--a href="#" onclick="sendguidata()">Sichern</a> |
+                                        <a href="#" onclick="loadguidata()">Laden</a-->
+                                        <div class="panel panel-default" id="ratio-panel">
+                                            <div class="panel-heading"  >Seitenverh&auml;ltnis</div>
+                                            <div class="panel-body">
+                                                <div id="ratioslider" class="ratioslider" style="width:200px; float:left" ></div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default" id="padding-panel">
+                                            <div class="panel-heading" >Zwischenabst&auml;nde</div>
+                                            <div class="panel-body">
+                                                <div id="paddingslider" class="paddingslider" style="width:200px; float:left" ></div>
+                                            </div>
+                                        </div>
+
+                                        <label for="gridbordercheckbox">Gitter anzeigen</label>
+                                        <input type="checkbox" name="gridbordercheckbox" id="gridbordercheckbox" checked="checked" /> <br />
+
+                                        <div id="newmediamenu"   >
+                                            <div class="panel panel-default" id="media-panel">
+                                                <div class="panel-heading">Medienbibliothek</div>
+                                                <div class="panel-body">
+                                                    <div class="newmediamenu">
+                                                        <div class="mediamenuitem1" value="text">
+                                                            <img src="img/designmode/icon-text.png" height="100" class="draggablemenuitem" value="text">
+                                                        </div>
+                                                        <div class="mediamenuitem2" value="picture">
+                                                            <img src="img/designmode/icon-picture.png" height="100" class="draggablemenuitem" value="picture">
+                                                        </div>
+                                                        <br>
+                                                        <div class="mediamenuitem3" value="sound">
+                                                            <img src="img/designmode/icon-sound.png" height="100" class="draggablemenuitem" value="sound">
+                                                        </div>
+                                                        <div class="mediamenuitem4" value="video">
+                                                            <img src="img/designmode/icon-video.png" height="100" class="draggablemenuitem" value="video">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="picoptionmenu" class="optionsmenu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Bild hochladen</div>
+                                            <div class="panel-body">
+
+                                                <form class="uploadform" action="/upload" method="post" enctype   =  "multipart/form-data" id="picuploadform">
+                                                    <input type="file" name="mediaelement" accept=".jpg, .gif, .png" id="picfileinput"/>
+                                                    <button type="submit">Upload</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Seitenverh&auml;ltnis</div>
+                                            <div class="panel-body">
+
+                                                <form id="picmenu">
+                                                    <input type="radio" name="picformat" value="filled">Filled<br>
+                                                    <input type="radio" name="picformat" value="aspectratio">Aspect Ratio<br>
+                                                    <input type="radio" name="picformat" value="panscan">Pan and Scan
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="videooptionmenu" class="optionsmenu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Video hochladen</div>
+                                            <div class="panel-body">
+                                                <form class="uploadform" action="/upload" method="post" enctype   =  "multipart/form-data" id="viduploadform">
+                                                    <input type="file" name="mediaelement" accept=".mp4" id= "vidfileinput"/>
+                                                    <button type="submit">Upload</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Seitenverh&auml;ltnis</div>
+                                            <div class="panel-body">
+                                                <form id="videomenu">
+                                                    <input type="radio" name="videoformat" value="filled">Filled<br>
+                                                    <input type="radio" name="videoformat" value="aspectratio">Aspect Ratio<br>
+                                                    <input type="radio" name="videoformat" value="panscan">Pan and Scan
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Wiedergabeeinstellungen</div>
+                                            <div class="panel-body">
+                                                <form>
+                                                    <input type="checkbox" name="autoplay" class="videooptions">Autoplay<br>
+                                                    <input type="checkbox" name="controls" class="videooptions">Show Controls<br>
+                                                    <input type="checkbox" name="loop" class="videooptions">Loop<br>
+                                                    <input type="checkbox" name="muted" class="videooptions">Mute<br>
+                                                    <!--input type="checkbox" name="poster" class="videooptions">Preview Pic<br-->
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="soundoptionmenu" class="optionsmenu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Audio hochladen</div>
+                                            <div class="panel-body">
+                                                <form class="uploadform" action="/upload" method="post" enctype="multipart/form-data" id="audiouploadform">
+                                                    <input type="file" name="mediaelement" accept=".mp3, .wav" id="soundfileinput" />
+                                                    <button type="submit" >Upload</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Wiedergabeoptionen</div>
+                                            <div class="panel-body">
+                                                <form>
+                                                    <input type="checkbox" name="autoplay" class="soundoptions">Autoplay<br>
+                                                    <input type="checkbox" name="controls" class="soundoptions">Show Controls<br>
+                                                    <input type="checkbox" name="loop" class="soundoptions">Loop<br>
+                                                    <input type="checkbox" name="mute" class="soundoptions">Mute<br>
+                                                    <!--input type="checkbox" name="poster" class="videooptions">Preview Pic<br-->
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="textoptionmenu" class="optionsmenu">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Text eingeben</div>
+                                            <div class="panel-body">
+
+                                                Geben Sie hier Ihren Text ein:
+                                                <textarea id="cktexteditor" name="cktexteditor">&lt;p&gt;Initial value.&lt;/p&gt;</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                        </form>
+                            <!--div style="padding-bottom: 20px">
+                                <label class="label-tabs label">Gewählt</label>
+                                <select id="selectMultiMetaData" class="form-control multiselect multiselect-info" multiple="multiple" style="min-width: 235px">
+                                </select>
+                            </div>
+                            <div>
+                                <label class="label-tabs label">Auswahl Metadaten</label>
+                                <select id="selectMetaData" class="form-control select select-primary select-block mbl" style="min-width: 235px;">
+                                    <option disabled selected>METADATEN</option>
+                                    <!--<option value="0">Bild</option>
+                                    <option value="1">Film</option>
+                                    <option value="2">Text</option>
+                                    <option value="3">Navigation</option>
+                                    <option value="4">Test</option>
+                                    <option value="5">Audio</option>-->
+                            <!--/select>
+                        </div-->
+                        </div>
                     </div>
                     <div id="tab3" class="tabContents unitTab">
                         <form id="formContextInformation">
@@ -378,6 +572,35 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" style="margin-right: 10px">Login</button>
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Abbrechen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- register -->
+        <div id="modal-register" class="modal fade" tabindex="-1">
+            <div class="modal-dialog" style="width: 400px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        Login
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center;">
+                            <label>Bitte registrieren Sie sich hier!</label>
+                        </div>
+                        <form action="index.html">
+                            <div class="form-group has-feedback"><input class="form-control" name="username" placeholder="Username" type="text" maxlength="30" style="line-height: 22px" id="username-register-input">
+                                <span class="form-control-feedback fui-user"></span>
+                            </div>
+                            <div class="form-group has-feedback"><input class="form-control" name="passwort" placeholder="Passwort" type="password" maxlength="30" style="line-height: 22px" id="password-register-input">
+                                <span class="form-control-feedback fui-lock"></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" style="margin-right: 10px" id="register-btn">Registrieren</button>
                         <button class="btn btn-default" type="button" data-dismiss="modal">Abbrechen</button>
                     </div>
                 </div>
@@ -715,8 +938,9 @@
                 </div>
             </div>
         </div>
-
+	<!-- tomsstuff -->
+		<div id="divisionmarker"></div>
+		<div id="sizemarker" class="draggable"></div>
 
     </body>
-
 </html>
