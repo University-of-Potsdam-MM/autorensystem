@@ -67,7 +67,7 @@ function initcontextmenu() {
 			directionoutput = directiontranslatorakkusativ(getneighboringdirection($(this),thisgridelement));	
 			out=out+'<li onclick="deletegridelement(\''+$(thisgridelement).attr('id')+'\', \''+ $(this).attr('id') +'\')">L&ouml;sche zugunsten des ' +directionoutput+' Elements</li>';
 		});
-		out = out+'<li onclick="spaltengleichmaessigverteilen(\''+thisid+'\')">Spalte gleichm&auml;&szlig;ig verteilen</li>';
+		//out = out+'<li onclick="spaltengleichmaessigverteilen(\''+thisid+'\')">Spalte gleichm&auml;&szlig;ig verteilen</li>';
 		out=out+'</ul></div>';
 		return out;
 	}
@@ -90,17 +90,7 @@ function initcontextmenu() {
 		$('.mycontextmenu').hide();
 	}
 	
-	$( document ).ready(function() {
-		$(document).on("click", function(e){
-			if ($('.mycontextmenu').length > 0) {
-				if (!(insidecontextmenu(e))) {
-					$('.mycontextmenu').remove();
-					//alert("notinsidecontextmenu: " + insidecontextmenu(e));
-				}
-			}
-		//updateHTML();
-		});
-	});		
+	
 	
 	
 function insidecontextmenu(e) {
