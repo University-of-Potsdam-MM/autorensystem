@@ -1,7 +1,7 @@
 guis = [];
 
 function createNewGUI(unitid) {
-	var newGUIHTML = 	'<div id="gridcontainer" class="centered" data-ratioheight="3" data-ratiowidth="4" data-idcounter="0" data-padding="1" data-showborders="true" data-gridpadding="1" data-unitid="' + unitid + '" style="display:block"><div class="gridelement" value="0" style="width:100%;height:100%;top:0%;left:0%;" id="' + unitid + '"></div></div>';
+	var newGUIHTML = 	'<div id="gridcontainer" class="centered" data-ratioheight="3" data-ratiowidth="4" data-idcounter="0" data-padding="1" data-showborders="true" data-gridpadding="1" data-unitid="' + unitid + '" style="display:block"><div class="gridelement" value="0" style="width:100%;height:100%;top:0%;left:0%;" id="me' + newid() + '"></div></div>';
 	//addHTML(unitid, newGUIHTML);
 	$("#gridcontainer").replaceWith(newGUIHTML);
 	init2();
