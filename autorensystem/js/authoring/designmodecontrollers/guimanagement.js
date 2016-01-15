@@ -2,8 +2,8 @@ var guis = [];
 
 function getGUIByUnitID(id) {
 	var currentGUI = {};
-	for (gui of guis) {
-		if (gui.unitID == id) {
+	for (var index in guis) {
+		if (guis[index].unitID == id) {
 			return gui;
 		}
 	}

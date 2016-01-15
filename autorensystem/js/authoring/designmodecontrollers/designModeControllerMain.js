@@ -27,7 +27,6 @@
 	
 	}
 	
-	
 	/*function addrightneighbors(gridelementid) {
 		var output = [];
 		var rightneighborid = getneighbor(gridelementid, 'right')
@@ -42,12 +41,7 @@
 	function test() {
 		alert(getmyneighbor('11', 'right'));
 	}
-	
 
-	
-	
-
-	
 	function spaltengleichmaessigverteilen(elementidofcurrentrow) {
 		hidemarker();
 		//var elementidofcurrentrow = contextmenugridsource; 
@@ -69,8 +63,7 @@
 				$('#'+rowelements[i]).css('width', onehundredpercentcounter + '%');
 				//$('#'+rowelements[i]).css('max-width', onehundredpercentcounter + '%');
 			}
-		}	
-			
+		}
 	}
 	
 	
@@ -482,14 +475,8 @@
 			}
 		}
 	}
-	
-	
 
-	
-
-	
 	function init2() {
-		
 		initmediaelementfunctions();
 		
 		$('#gridcontainer').data('showborders','true');
@@ -506,7 +493,6 @@
 					$('.gridelement').css('padding', input+'%');
 				}
 			}
-			
 			//alert($(this).val());
 		});
 		
@@ -860,14 +846,8 @@
 			}
 			
 		});
-	
-		
-		
+
 		initdividefunctions();
-	
-	
-
-
 	}
 	
 	function togglegridvisibility() {
@@ -1014,7 +994,7 @@
 		otherelement.css({'top'  : Math.min(deletedelementtop,  otherelementtop) + '%'});
 		
 		deletedelement.remove();
-				
+		updateHTML();
 	}
 	
 	
@@ -1037,8 +1017,3 @@
 		$('#divisionmarker').hide();
 	
 	}
-	
-	
-
-	
-	

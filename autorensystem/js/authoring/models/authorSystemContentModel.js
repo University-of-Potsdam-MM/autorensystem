@@ -27,6 +27,7 @@ function AuthorSystemContent() {
 
     this._scenarioList = [];
     this._options = {};
+    this._guis = [];
 
     return this;
 }
@@ -43,12 +44,20 @@ AuthorSystemContent.prototype.getUnitByUUID = function(uuid) {
     }
 };
 
+AuthorSystemContent.prototype.getGUIs = function() {
+    return this._guis;
+};
+
 AuthorSystemContent.prototype.getScenario = function(scenarioName) {
     for (var i in this._scenarioList) {
         var scenario = this._scenarioList[i];
         if (scenario.getName() == scenarioName)
             return scenario;
     }
+};
+
+AuthorSystemContent.prototype.setGUIs = function(guis) {
+    this._guis = guis;
 };
 
 /**
