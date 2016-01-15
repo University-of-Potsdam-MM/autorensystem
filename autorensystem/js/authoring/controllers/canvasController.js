@@ -80,20 +80,18 @@ function initPlumbCanvas() {
 
     // triggered if unit container, i.e. canvas is clicked
     $("#container").on("click", function() {
-        if (!(connectionIsClicked || designmode)) {
-            //return false;
+        if (!designmode) {
+            // clear marking from existing learning units
+            clearMarkingFromLearningUnits();
+            // clear marking from label connections
+            clearMarkingFromConnections();
 
-        // clear marking from existing learning units
-        clearMarkingFromLearningUnits();
-        // clear marking from label connections
-        clearMarkingFromConnections();
+            bool_unitClicked = false;
+            connectionIsClicked = false;
 
-        bool_unitClicked = false;
-        connectionIsClicked = false;
-
-        // all tab content invisible
-        showScenarioTab();
-		}
+            // all tab content invisible
+            showScenarioTab();
+        }
     });
 
     // triggered if add unit (plus icon) or create new unit in navigation bar was clicked

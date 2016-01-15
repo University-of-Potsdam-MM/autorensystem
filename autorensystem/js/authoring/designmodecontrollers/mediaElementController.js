@@ -12,24 +12,9 @@ $( document ).ready(function() {
 		$('html').keyup(function(e){
 			if(e.keyCode == 46) {
 				if (currentmarkedid != 0) {
-					var mediatype = $('#'+currentmarkedid).data('mediavalue'); 
-					var metadata = '';
-					if (mediatype == "picture") {
-						metadata = "MD_IMAGE";	
-					}
-					if (mediatype == "text") {
-						metadata = "MD_TEXT";	
-					}
-					if (mediatype == "sound") {
-						metadata = "MD_AUDIO";
-					}
-					if (mediatype == "video") {
-						metadata = "MD_VIDEO";	
-					}
-					removeMetaDataFromUnit(metadata, $('#'+currentUnitUUID));
-					
 					$('#' + currentmarkedid).remove();
 					unmarkmediaallmediaelements();
+					updateHTML();
 				}
 			}
 		});
@@ -61,123 +46,113 @@ function getmediabuttonsource(id) {
 	return out;
 }	
 	
-	function markmediaelement(id) {
-		// show menu	
-		console.log(id);
-		unmarkmediaallmediaelements();
-		currentmarkedid = id;
-		$('#'+id).addClass('borderglowing');
-		$('#'+id).draggable('enable');
-		var mediavalue = $('#'+id).data('mediavalue');
-		$('.optionsmenu').hide();
-		$('#media-panel').hide();
-		switch(mediavalue) {
-			case 'text':
-				$('#textoptionmenu').show();
-				texttoeditor();
-				break;
-			case 'picture':
-				//filename = 'picture';
-				$('#picoptionmenu').show();
-				break;
-			case 'sound':
-				//filename = 'sound';
-				$('#soundoptionmenu').show();
-				break;
-			case 'video':
-				$('#videooptionmenu').show();
-				break;
-			default:
-				$('#pageoptionmenu').show();
-			} 
-		
-		
-	}
-	
-	
-	
+function markmediaelement(id) {
+	// show menu
+	console.log(id);
+	unmarkmediaallmediaelements();
+	currentmarkedid = id;
+	$('#'+id).addClass('borderglowing');
+	$('#'+id).draggable('enable');
+	var mediavalue = $('#'+id).data('mediavalue');
+	$('.optionsmenu').hide();
+	$('#media-panel').hide();
+	switch(mediavalue) {
+		case 'text':
+			$('#textoptionmenu').show();
+			texttoeditor();
+			break;
+		case 'picture':
+			//filename = 'picture';
+			$('#picoptionmenu').show();
+			break;
+		case 'sound':
+			//filename = 'sound';
+			$('#soundoptionmenu').show();
+			break;
+		case 'video':
+			$('#videooptionmenu').show();
+			break;
+		default:
+			$('#pageoptionmenu').show();
+		}
 
 
-	
-	
+}
+
 function initmediaelementfunctions() {
+	$('.mediaelement').click(function(e) {
+		if (ismediamode()) {
+			markmediaelement($(this).attr('id'));
+		}
+	});
 
-			$('.mediaelement').click(function(e) {
-				if (ismediamode()) {
-					markmediaelement($(this).attr('id'));
-				}
-			});
-			
-	
-			$( '.gridelement' ).droppable({     	
-			
-			drop: function( event, ui ) {
-				var draggedelement=$(ui.draggable);
-				
-				if (!(draggedelement.attr('id') == 'sizemarker')) {
-					tempid = 'me' + newid();
-					if (draggedelement.hasClass('mediaelement')) {
-						//alert('Draggedelement: ' + draggedelement.attr('id'));
-						// switche media elements
-						var draggableparent = draggedelement.parent();
-						console.log ("Draggable Parent: " + draggableparent.attr('id'));
-						var mediaelement1 = $(this).html();
-						var mediaelement2 = draggedelement.html();
-						//draggableparent.html(mediaelement1);
-						
-						draggableparent.html(mediaelement1);
-						$(this).html('');
-						$(draggedelement).appendTo($(this));
-						$(draggedelement).css({'top' : '0px'});
-						$(draggedelement).css({'left' : '0px'});
-						$(draggedelement).css({'height' : '100%'});
-						$(draggedelement).css({'width' : '100%'});
-						
-					
-					} else { 
-						var metaDatum = '';
-						
-						$( '#infotext' ).append('gedroppt');
-						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="'+ currentdraggedtype +'"></div>');
-						if (currentdraggedtype == 'text') {
-							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-text.png')"});
-							$('#'+tempid).html('<div class="textmediaoutput">Insert your text here</div>');
-							metaDatum = "MD_TEXT";
-							
-						}
-						if (currentdraggedtype == 'picture') {
-							$('#'+tempid).css({'background-color' : 'LightBlue'});
-							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-pic.png')"});
-							metaDatum = "MD_IMAGE";
-						}
-						
-						if (currentdraggedtype == 'sound') {
-							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-sound.png')"});
-							$('#'+tempid).css({'background-color' : 'orange'});
-							metaDatum = "MD_AUDIO";
-						}
-						
-						if (currentdraggedtype == 'video') {
-							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-video.png')"});
-							metaDatum = "MD_VIDEO";
-						}
-						addMetaDataToUnit(metaDatum, $('#'+currentUnitUUID));
-						setmediaicons(tempid);
+	$( '.gridelement' ).droppable({
+		drop: function( event, ui ) {
+			var draggedelement=$(ui.draggable);
+
+			if (!(draggedelement.attr('id') == 'sizemarker')) {
+				tempid = 'me' + newid();
+				if (draggedelement.hasClass('mediaelement')) {
+					//alert('Draggedelement: ' + draggedelement.attr('id'));
+					// switche media elements
+					var draggableparent = draggedelement.parent();
+					console.log ("Draggable Parent: " + draggableparent.attr('id'));
+					var mediaelement1 = $(this).html();
+					var mediaelement2 = draggedelement.html();
+					//draggableparent.html(mediaelement1);
+
+					draggableparent.html(mediaelement1);
+					$(this).html('');
+					$(draggedelement).appendTo($(this));
+					$(draggedelement).css({'top' : '0px'});
+					$(draggedelement).css({'left' : '0px'});
+					$(draggedelement).css({'height' : '100%'});
+					$(draggedelement).css({'width' : '100%'});
+				} else {
+					$( '#infotext' ).append('gedroppt');
+					$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="'+ currentdraggedtype +'"></div>');
+					if (currentdraggedtype == 'text') {
+						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-text.png')"});
+						$('#'+tempid).html('<div class="textmediaoutput">Insert your text here</div>');
+
 					}
-					updateHTML();
-					$( 'body' ).unbind();
-					init2();
-					unmarkmediaallmediaelements();
-					hidemarker();
-					$('#'+tempid).draggable('disable');
-				}
-			  //.addClass( "bgcolor" )
-			}
-			
+					if (currentdraggedtype == 'picture') {
+						$('#'+tempid).css({'background-color' : 'LightBlue'});
+						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-pic.png')"});
+						//$('#'+tempid).css({'background' : 'LightBlue'});
+						//binduploadlistener(tempid, 'pictureelement');
+						//$('#'+tempid).html('<img src="img/designmode/potsdam2.jpg" class="pictureelement">');
+					}
 
-		});
-	
-};
+					if (currentdraggedtype == 'sound') {
+						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-sound.png')"});
+						$('#'+tempid).css({'background-color' : 'orange'});
+						//binduploadlistener(tempid, 'soundelement');
+					}
+
+					if (currentdraggedtype == 'video') {
+						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-video.png')"});
+						/*$('#'+tempid).html('<video class="videoelement" controls="controls"><source src="tagesschau.mp4" type="video/mp4">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
+						*/
+						//binduploadlistener(tempid, 'videoelement');
+
+						//autoplay controls loop mute
+					}
+					setmediaicons(tempid);
+					/*$('#'+tempid).append('<div class="editmediaelementbutton" onClick="markmediaelement(\''+ tempid + '\')"></div>');
+					*/
+				}
+				updateHTML();
+				$( 'body' ).unbind();
+				init2();
+				unmarkmediaallmediaelements();
+				hidemarker();
+				$('#'+tempid).draggable('disable');
+			}
+		  //.addClass( "bgcolor" )
+		}
+	});
+}
 
 
 // TODO -> Zusammenfassen
@@ -193,9 +168,6 @@ function insidegridelementevent(e) {
 function insidegridelement(mx, my) {
 	//console.log("Test: " +  mx + ' ' + my );
 	if (!((typeof mx === "undefined") || (typeof my === "undefined"))) {
-		
-
-	
 		var gridtop 	= $('#gridcontainer').offset().top;
 		var gridbottom 	= $('#gridcontainer').offset().top  + $('#gridcontainer').height();
 		var gridleft 	= $('#gridcontainer').offset().left;
@@ -206,8 +178,7 @@ function insidegridelement(mx, my) {
 	else {
 		console.log('undefined'); 
 		return false;
-	};
-		
+	}
 }
 
 function insidepropertiesareaevent(e) {

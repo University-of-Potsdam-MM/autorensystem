@@ -100,10 +100,16 @@ function _showActiveTabContent(tab) {
         if (!bool_unitClicked) return false;
     }
     if ($(tab).hasClass("contentTab")) {
+        lastOpenedUnitTab = tab;
+        if (!bool_unitClicked) return false;
+
         changeToDesignMode();
         designmode = true;
-        resizegridcontainer();
+
         unmarkmediaallmediaelements();
+
+        loadOrCreateGUIHTML(currentUnitUUID);
+        resizegridcontainer();
     } else {
         changeToEditorMode();
         designmode = false;
