@@ -51,7 +51,7 @@ function grid2json () {
 				media.id = containingmedium.attr('id');
 				if (grid.containsMedia=="yes") {
 					if (mediatype == "video") {
-						media.source = containingmedium.find('source').attr('src');
+						media.source = containingmedium.find('source').attr('src').replace(/\/uploads\//, "");
 						properties.autoplay =  containingmedium.children().hasClass('autoplay');
 						properties.controls =  containingmedium.children().hasClass('controls');
 						properties.loop =  containingmedium.children().hasClass('loop');
@@ -60,11 +60,11 @@ function grid2json () {
 						properties.fit = containingmedium.children().css('object-fit');
 					}
 					if (mediatype == "picture") {
-						media.source = containingmedium.find('img').attr('src');
+						media.source = containingmedium.find('img').attr('src').replace(/\/uploads\//, "");
 						properties.fit = containingmedium.children().css('object-fit');
 					}
 					if (mediatype == "sound") {
-						media.source = containingmedium.find('source').attr('src');
+						media.source = containingmedium.find('source').attr('src').replace(/\/uploads\//, "");
 						properties.autoplay =  containingmedium.children().hasClass('autoplay');
 						properties.controls =  containingmedium.children().hasClass('controls');
 						properties.loop =  containingmedium.children().hasClass('loop');
@@ -138,7 +138,7 @@ function json2grid(inputjson) {
 				if (containsmedia == 'yes') { 
 				
 					if (mediatype == "picture") {
-						var src = media.source;		
+						var src = '/uploads/' + media.source;
 						var fit = 'style="object-fit:' + media.properties.fit +';"';
 						$('#' + media.id).html('<img class="pictureelement"' + fit + 'src='+src+' ></div>' );
 					}
@@ -147,7 +147,7 @@ function json2grid(inputjson) {
 					if (mediatype == "video") {
 						var controls = ''; var autoplay =''; var loop = ''; var muted = '';
 						var fit = 'style="object-fit:' + media.properties.fit +';"';
-						var src = media.source;
+						var src = '/uploads/' + media.source;
 						if (media.properties.autoplay) {
 							autoplay = ' autoplay ';
 						}
@@ -165,7 +165,7 @@ function json2grid(inputjson) {
 				
 					if (mediatype == "sound") {
 						var controls = ''; var autoplay =''; var loop = ''; var muted = '';
-						var src = media.source;
+						var src = '/uploads/' + media.source;
 						if (media.properties.autoplay) {
 							autoplay = ' autoplay ';
 						}

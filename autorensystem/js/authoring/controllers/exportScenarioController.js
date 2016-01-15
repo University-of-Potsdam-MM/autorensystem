@@ -34,7 +34,7 @@ function exportScenario() {
                 type: "POST",
                 data: {
                     rules: response,
-                    content: JSON.stringify({})
+                    content: JSON.stringify(authorSystemContent.getGUIs())
                 },
                 success: function(response) {
                     alert("Export war erfolgreich.")

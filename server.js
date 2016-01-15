@@ -55,7 +55,7 @@ app.post('/upload',function(req,res){
         }
         //res.end("File is uploaded: " + "uploads/" + filenameoutput);
 		
-		res.end('uploads/' + filenameoutput + pathtemp);
+		res.end(filenameoutput+pathtemp);
     });
 });
 

@@ -110,8 +110,7 @@
 		if (direction == 'left') return 'linken';
 		if (direction == 'top') return 'oberen';
 		if (direction == 'bottom') return 'unteren';
-	
-	};
+	}
 
 
 	function uploadlistener() {
@@ -130,17 +129,17 @@
 			  success: function(data){ 
 				//alert('<img src="'+data+'">');
 				if (classname == "pictureelement") {
-					$('#'+id).html('<img src="'+data+'" class="'+classname+'">');
+					$('#'+id).html('<img src="/uploads/'+data+'" class="'+classname+'">');
 					document.getElementById('picfileinput').value='';
 				}
 				
 				if (classname == "videoelement") {
-					$('#'+id).html('<video class="videoelement" controls="controls"><source src="'+data+'">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
+					$('#'+id).html('<video class="videoelement" controls="controls"><source src="/uploads/'+data+'">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
 					document.getElementById('vidfileinput').value="";
 				}
 				
 				if (classname == "soundelement") {
-					$('#'+id).html('<audio class="soundelelement" controls="controls"><source src="'+data+'" type="audio/mpeg">Your browser does not support the audio tag.</audio><div class="infobarmedia"></div>');
+					$('#'+id).html('<audio class="soundelelement" controls="controls"><source src="/uploads/'+data+'" type="audio/mpeg">Your browser does not support the audio tag.</audio><div class="infobarmedia"></div>');
 					document.getElementById('soundfileinput').value="";
 				}
 				
@@ -389,7 +388,8 @@
 					$('#'+currentmarkedid).children().css({'object-fit': 'cover'});
 					break;
 				default:
-			} 
+			}
+			updateHTML();
 		});
 		
 		
