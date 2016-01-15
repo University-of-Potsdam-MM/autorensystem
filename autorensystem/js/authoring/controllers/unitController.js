@@ -106,7 +106,7 @@ function loadUnit(unit, j) {
     // get all meta data
     var unitMetaData = unit.getMetaData();
     for (var i in unitMetaData)
-        addMetaDataToUnit(unitMetaData[i], unit);
+        addMetaDataToUnit(unitMetaData[i], $("#"+unit.getUUID()));
 
 
     // place unit in state machine
@@ -240,8 +240,8 @@ function addMetaDataToUnit(metaDatum, unit) {
         .attr("id", current_unit.getName() + current_unit.getMetaData().length + "metaIcon");
 
     // choose icon symbol and add it to meta data DOM
-    var metaIcon = chooseMetaIcon(metaDatum);
-    divMetaIcon.attr("title", metaDatum);
+    var metaIcon = chooseMetaIcon(metaDatum.name);
+    divMetaIcon.attr("title", metaDatum.name);
 
     // add DOM for meta data icon (glyph)
     var bMetaIcon = $("<b>").addClass(metaIcon);
@@ -255,7 +255,7 @@ function addMetaDataToUnit(metaDatum, unit) {
 
 
     // set endpoints on the right place
-    inst.repaintEverything();
+    // inst.repaintEverything();
 }
 
 /**
@@ -288,7 +288,7 @@ function removeMetaDataFromUnit(metaDatum, unit) {
         $(unit).css("padding-bottom", "");
 
     // set endpoints on the right place
-    inst.repaintEverything();
+    // inst.repaintEverything();
 }
 
 // build unit DOM

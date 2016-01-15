@@ -14,7 +14,7 @@ $( document ).ready(function() {
 				if (currentmarkedid != 0) {
 					var mediavalue1 = $('#'+currentmarkedid).data('mediavalue');
 					console.log("Medienwert:  " + mediavalue1);
-					if (mediavalue1 == "picture") {
+					/*if (mediavalue1 == "picture") {
 						removeMetaDataFromUnit("MD_IMAGE", $('#'+currentUnitUUID));
 					}
 					if (mediavalue1 == "video") {
@@ -25,11 +25,10 @@ $( document ).ready(function() {
 					}
 					if (mediavalue1 == "text") {
 						removeMetaDataFromUnit("MD_TEXT", $('#'+currentUnitUUID));
-					}
+					}*/
 					$('#' + currentmarkedid).remove();
 					unmarkmediaallmediaelements();
 					updateHTML();
-					
 				}
 			}
 		});
@@ -129,7 +128,7 @@ function initmediaelementfunctions() {
 						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="text"></div>');
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-text.png')"});
 						$('#'+tempid).html('<div class="textmediaoutput">Insert your text here</div>');
-						addMetaDataToUnit("MD_TEXT", $('#'+currentUnitUUID));
+						//addMetaDataToUnit("MD_TEXT", $('#'+currentUnitUUID));
 					}
 					if (currentdraggedtype == 'picture') {
 						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="picture"></div>');
@@ -138,7 +137,7 @@ function initmediaelementfunctions() {
 						//$('#'+tempid).css({'background' : 'LightBlue'});
 						//binduploadlistener(tempid, 'pictureelement');
 						//$('#'+tempid).html('<img src="img/designmode/potsdam2.jpg" class="pictureelement">');
-						addMetaDataToUnit("MD_IMAGE", $('#'+currentUnitUUID));
+						//addMetaDataToUnit("MD_IMAGE", $('#'+currentUnitUUID));
 						$('#'+tempid).data('mediavalue', 'picture');
 					}
 
@@ -146,7 +145,7 @@ function initmediaelementfunctions() {
 						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="sound"></div>');
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-sound.png')"});
 						$('#'+tempid).css({'background-color' : 'orange'});
-						addMetaDataToUnit("MD_AUDIO", $('#'+currentUnitUUID));
+						//addMetaDataToUnit("MD_AUDIO", $('#'+currentUnitUUID));
 						$('#'+tempid).data('mediavalue', 'sound');
 					}
 
@@ -156,7 +155,7 @@ function initmediaelementfunctions() {
 						/*$('#'+tempid).html('<video class="videoelement" controls="controls"><source src="tagesschau.mp4" type="video/mp4">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
 						*/
 						//binduploadlistener(tempid, 'videoelement');
-						addMetaDataToUnit("FILM", $('#'+currentUnitUUID));
+						//addMetaDataToUnit("FILM", $('#'+currentUnitUUID));
 						$('#'+tempid).data('mediavalue', 'video');
 						//autoplay controls loop mute
 					}
