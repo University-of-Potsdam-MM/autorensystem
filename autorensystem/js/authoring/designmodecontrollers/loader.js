@@ -15,7 +15,7 @@ $( document ).ready(function() {
 	});
 	
 	$("#saveScenario").on("click", function() {
-		save();
+		//save();
 	});
 	
 });

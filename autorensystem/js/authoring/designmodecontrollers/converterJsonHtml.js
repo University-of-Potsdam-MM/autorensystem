@@ -101,7 +101,6 @@ function grid2json () {
 }
 
 function json2grid(inputjson) {
-	
 		//var inputjson = jQuery.parseJSON(gridjson);
 		
 		$('#gridcontainer').html('');
@@ -113,7 +112,7 @@ function json2grid(inputjson) {
 		var grids = []; 
 		grids = inputjson.grids;
 		
-		//alert("Länge " + grids.length);
+		//alert("LÃ¤nge " + grids.length);
 		for (i=0; i<grids.length ; i++) {
 			$('#gridcontainer').append('<div class="gridelement" id="'+ grids[i].id + '">');
 			$('#' + grids[i].id).css('width',  grids[i].width + '%');
@@ -193,5 +192,4 @@ function json2grid(inputjson) {
 		
 		// (re-)bind clickevents
 		init2();
-
 	}	

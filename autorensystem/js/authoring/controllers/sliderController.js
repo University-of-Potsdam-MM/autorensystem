@@ -35,6 +35,7 @@ $(function() {
             jsPlumb.setZoom(scaleSlider);
             valueSlider = ui.value;
             inst.repaintEverything();
+            jsPlumb.repaintEverything();
         }})
         // add pips and label to slider
         .slider("pips", {first:"label", last:"label", labels:{"first":"-", "last":"+"}});

@@ -27,7 +27,6 @@
 	
 	}
 	
-	
 	/*function addrightneighbors(gridelementid) {
 		var output = [];
 		var rightneighborid = getneighbor(gridelementid, 'right')
@@ -42,12 +41,7 @@
 	function test() {
 		alert(getmyneighbor('11', 'right'));
 	}
-	
 
-	
-	
-
-	
 	function spaltengleichmaessigverteilen(elementidofcurrentrow) {
 		hidemarker();
 		//var elementidofcurrentrow = contextmenugridsource; 
@@ -69,8 +63,7 @@
 				$('#'+rowelements[i]).css('width', onehundredpercentcounter + '%');
 				//$('#'+rowelements[i]).css('max-width', onehundredpercentcounter + '%');
 			}
-		}	
-			
+		}
 	}
 	
 	
@@ -460,9 +453,6 @@
 	}
 	*/
 
-	
-
-	
 	function setmediaicons(thismediaelementid) { 
 		var thiselement = $('#'+thismediaelementid);
 		thiselement.find('.infobarmedia').html('');
@@ -482,16 +472,8 @@
 			}
 		}
 	}
-	
-	
 
-	
-
-	
 	function init2() {
-		
-		initmediaelementfunctions();
-		
 		$('#gridcontainer').data('showborders','true');
 			
 		function unifypadding() {
@@ -506,24 +488,19 @@
 					$('.gridelement').css('padding', input+'%');
 				}
 			}
-			
 			//alert($(this).val());
 		});
-		
-		
+
 		$('#aspectwidth').on('input',function(e){
 			setpageaspectratio();
 			
 			//alert($(this).val());
 		});
-		
-		
+
 		$('#aspectheight').on('input',function(e){
 			setpageaspectratio();
 		});
-		
-		
-	
+
 		$('.mediaelement').mousedown(function() {
 			if ($(this).attr('id') != currentmarkedid) {
 				$(this).draggable({ disabled: true });
@@ -572,12 +549,8 @@
 		$( '#contextmenumedia' ).click(function() {
 			$( '#contextmenumedia' ).hide();
 		});
-	
-	
-		initcontextmenu(); 
-				// right click
 
-
+		initcontextmenu(); // right click
 
 		$( '.draggablemenuitem').draggable( {
 			helper: "clone",
@@ -650,10 +623,6 @@
 				//$(this).css({'z-index':'10000000'});
 			}
 		});
-		
-		initmediaelementfunctions();
-		
-		
 
 		/*
 		$( '.mediaelement' ).click(function() {  
@@ -860,14 +829,9 @@
 			}
 			
 		});
-	
-		
-		
+
 		initdividefunctions();
-	
-	
-
-
+		initmediaelementfunctions();
 	}
 	
 	function togglegridvisibility() {
@@ -1014,7 +978,7 @@
 		otherelement.css({'top'  : Math.min(deletedelementtop,  otherelementtop) + '%'});
 		
 		deletedelement.remove();
-				
+		updateHTML();
 	}
 	
 	
@@ -1037,8 +1001,3 @@
 		$('#divisionmarker').hide();
 	
 	}
-	
-	
-
-	
-	
