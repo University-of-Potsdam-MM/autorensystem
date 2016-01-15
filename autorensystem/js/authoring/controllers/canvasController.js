@@ -80,8 +80,8 @@ function initPlumbCanvas() {
 
     // triggered if unit container, i.e. canvas is clicked
     $("#container").on("click", function() {
-        if (connectionIsClicked || designmode)
-            return false;
+        if (!(connectionIsClicked || designmode)) {
+            //return false;
 
         // clear marking from existing learning units
         clearMarkingFromLearningUnits();
@@ -93,6 +93,7 @@ function initPlumbCanvas() {
 
         // all tab content invisible
         showScenarioTab();
+		}
     });
 
     // triggered if add unit (plus icon) or create new unit in navigation bar was clicked

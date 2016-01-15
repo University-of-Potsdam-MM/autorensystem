@@ -12,6 +12,22 @@ $( document ).ready(function() {
 		$('html').keyup(function(e){
 			if(e.keyCode == 46) {
 				if (currentmarkedid != 0) {
+					var mediatype = $('#'+currentmarkedid).data('mediavalue'); 
+					var metadata = '';
+					if (mediatype == "picture") {
+						metadata = "MD_IMAGE";	
+					}
+					if (mediatype == "text") {
+						metadata = "MD_TEXT";	
+					}
+					if (mediatype == "sound") {
+						metadata = "MD_AUDIO";
+					}
+					if (mediatype == "video") {
+						metadata = "MD_VIDEO";	
+					}
+					removeMetaDataFromUnit(metadata, $('#'+currentUnitUUID));
+					
 					$('#' + currentmarkedid).remove();
 					unmarkmediaallmediaelements();
 				}
@@ -119,39 +135,34 @@ function initmediaelementfunctions() {
 						
 					
 					} else { 
-					
+						var metaDatum = '';
+						
 						$( '#infotext' ).append('gedroppt');
 						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="'+ currentdraggedtype +'"></div>');
 						if (currentdraggedtype == 'text') {
 							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-text.png')"});
 							$('#'+tempid).html('<div class="textmediaoutput">Insert your text here</div>');
+							metaDatum = "MD_TEXT";
 							
 						}
 						if (currentdraggedtype == 'picture') {
 							$('#'+tempid).css({'background-color' : 'LightBlue'});
 							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-pic.png')"});
-							//$('#'+tempid).css({'background' : 'LightBlue'});
-							//binduploadlistener(tempid, 'pictureelement');
-							//$('#'+tempid).html('<img src="img/designmode/potsdam2.jpg" class="pictureelement">');
+							metaDatum = "MD_IMAGE";
 						}
 						
 						if (currentdraggedtype == 'sound') {
 							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-sound.png')"});
 							$('#'+tempid).css({'background-color' : 'orange'});
-							//binduploadlistener(tempid, 'soundelement');
+							metaDatum = "MD_AUDIO";
 						}
 						
 						if (currentdraggedtype == 'video') {
 							$('#'+tempid).css({'background-image' : "url('img/designmode/bg-video.png')"});
-							/*$('#'+tempid).html('<video class="videoelement" controls="controls"><source src="tagesschau.mp4" type="video/mp4">Your browser does not support the video tag.</video><div class="infobarmedia"></div>');
-							*/
-							//binduploadlistener(tempid, 'videoelement');
-							
-							//autoplay controls loop mute
+							metaDatum = "MD_VIDEO";
 						}
+						addMetaDataToUnit(metaDatum, $('#'+currentUnitUUID));
 						setmediaicons(tempid);
-						/*$('#'+tempid).append('<div class="editmediaelementbutton" onClick="markmediaelement(\''+ tempid + '\')"></div>');
-						*/
 					}
 					updateHTML();
 					$( 'body' ).unbind();

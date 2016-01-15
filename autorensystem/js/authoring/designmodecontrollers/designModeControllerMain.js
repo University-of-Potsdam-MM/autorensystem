@@ -257,6 +257,20 @@
 		uploadlistener();
 		init2();
 		
+		
+		$(document).on("click", function(e){
+			console.log("!!!clicked out side contextmenu");
+			if ($('.mycontextmenu').length > 0) {
+				if (!(insidecontextmenu(e))) {
+					$('.mycontextmenu').remove();
+					//alert("notinsidecontextmenu: " + insidecontextmenu(e));
+				}
+			}
+		//updateHTML();
+		});
+		
+		
+		
 		$('#media-panel').hide();
 		$('#padding-panel').show();
 		$('#ratio-panel').show();

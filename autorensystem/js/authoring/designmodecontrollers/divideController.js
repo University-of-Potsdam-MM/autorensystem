@@ -8,6 +8,7 @@
 	$(document).mousemove(function(e) {
 		if (!(insidegridelementevent(e))) {
 			$('#divisionmarker').hide();
+			$('#sizemarker').hide();
 		}
 	});
 	
