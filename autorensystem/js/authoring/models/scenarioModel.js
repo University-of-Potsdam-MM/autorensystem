@@ -4,7 +4,7 @@
 
 function Scenario() {
     this._name = "";
-    this._parameters = [];
+    this._units = [];
     this._connections = [];
 
     return this;
@@ -15,12 +15,18 @@ Scenario.prototype.fromJSON = function(item) {
     // copy all values (shallow copy)
     for (var i in item) this[i] = item[i];
 
+    // fix for loading of mislabeled data
+    if (typeof this["_parameters"] != "undefined") {
+        this._units = this["_parameters"];
+        delete this["_parameters"];
+    }
+
     // "cast" units to type Unit (deep copy)
     var units = [];
-    for (var iu in this._parameters) {
-        units.push(new Unit().fromJSON(this._parameters[iu], this));
+    for (var iu in this._units) {
+        units.push(new Unit().fromJSON(this._units[iu], this));
     }
-    this._parameters = units;
+    this._units = units;
 
     // "cast" connections to type Connection (deep copy)
     var connections = [];
@@ -40,35 +46,35 @@ Scenario.prototype.setName = function(name) {
 };
 
 Scenario.prototype.getUnits = function() {
-    return this._parameters;
+    return this._units;
 };
 
 Scenario.prototype.hasUnits = function() {
-    return this._parameters.length > 0;
+    return this._units.length > 0;
 };
 
 Scenario.prototype.getUnitByName = function(unitName) {
-    for (var i in this._parameters) {
-        var unit = this._parameters[i];
+    for (var i in this._units) {
+        var unit = this._units[i];
         if (unit.getName() == unitName)
             return unit;
     }
 };
 
 Scenario.prototype.getUnitByUUID = function(uuid) {
-    for (var i in this._parameters) {
-        var unit = this._parameters[i];
+    for (var i in this._units) {
+        var unit = this._units[i];
         if (unit.getUUID() == uuid)
             return unit;
     }
 };
 
 Scenario.prototype.addUnit = function(unit) {
-    this._parameters.push(unit);
+    this._units.push(unit);
 };
 
 Scenario.prototype.removeUnit = function(unit) {
-    var index = this._parameters.indexOf(unit);
+    var index = this._units.indexOf(unit);
     if (index > -1) {
         // first, remove connections attached to that unit
         for (var i in this._connections) {
@@ -77,7 +83,7 @@ Scenario.prototype.removeUnit = function(unit) {
                 this.removeConnection(conn.getID());
         }
         // then, remove the unit
-        this._parameters.splice(index, 1);
+        this._units.splice(index, 1);
     }
 };
 
@@ -114,9 +120,9 @@ Scenario.prototype.removeConnection = function(connId) {
 Scenario.prototype.getScenarioContext = function() {
     var contextList = [];
     // for each unit ...
-    for (var i in this._parameters) {
+    for (var i in this._units) {
         // ... get its associated context items
-        var unitContext = this._parameters[i].getContextData();
+        var unitContext = this._units[i].getContextData();
         for (var j in unitContext) {
             // make a deep copy of each
             var contextItem = new ContextInformation().fromJSON(unitContext[j]);
@@ -136,8 +142,8 @@ Scenario.prototype.getScenarioContext = function() {
  * @returns {boolean} true if there is context, else false.
  */
 Scenario.prototype.hasContext = function() {
-    for (var i in this._parameters)
-        if (this._parameters[i].getContextData().length != 0) return true;
+    for (var i in this._units)
+        if (this._units[i].getContextData().length != 0) return true;
     return false;
 };
 
@@ -152,9 +158,9 @@ Scenario.prototype.getABoxJSONLD = function() {
     var aBoxJSONLD = new ABoxJSONLD();
 
     // for each unit ...
-    for (var i in this._parameters) {
+    for (var i in this._units) {
         // ... get its JSON-LD (a list of JSON-LD named individuals)
-        var unitJSONLDGraph = this._parameters[i].getJSONLDGraph();
+        var unitJSONLDGraph = this._units[i].getJSONLDGraph();
         // ... add all unique items (individuals) in this list to A-Box graph
         for (var j in unitJSONLDGraph) {
             var unitJSONLD = unitJSONLDGraph[j];

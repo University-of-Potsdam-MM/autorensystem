@@ -80,7 +80,7 @@ app.post('/saveExport', function(req, res) {
 
 		console.log("Rules file was saved!");
 
-		fs.writeFile("./export/content.js", req.body.content, function(err) {
+		fs.writeFile("./export/content.json", req.body.content, function(err) {
 			if(err) {
 				return console.log(err);
 			}

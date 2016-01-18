@@ -21,6 +21,8 @@ function exportScenario() {
 
     var JSONLD = authorSystemContent.getScenario(currentScenario).getABoxJSONLD();
 
+    replaceScenarioReferencesWithNames();
+
     $.ajax({
         url: "http://localhost:9998/noderules/get-adaptation-rules",
         type: "POST",
@@ -34,7 +36,7 @@ function exportScenario() {
                 type: "POST",
                 data: {
                     rules: response,
-                    content: JSON.stringify(authorSystemContent.getGUIs())
+                    content: JSON.stringify(authorSystemContent)
                 },
                 success: function(response) {
                     alert("Export war erfolgreich.")
