@@ -156,11 +156,15 @@ Unit.prototype.getJSONLDGraph = function () {
 
         // if this unit is the source of a connection, add statement "[unit] kno:has... [target]"
         if (connection.hasSource(this._uuid))
-            unitJSONLD[translate_relationLabelForward(connection.getLabel())] = "abox:"+connection.getTargetId();
+            unitJSONLD[translate_relationLabelForward(connection.getLabel())] = {
+                "@id" : "abox:"+connection.getTargetId()
+            };
 
         // if this unit is the target of a connection, add statement "[unit] kno:is...Of [source]"
         if (connection.hasTarget(this._uuid))
-            unitJSONLD[translate_relationLabelBackward(connection.getLabel())] = "abox:"+connection.getSourceId();
+            unitJSONLD[translate_relationLabelBackward(connection.getLabel())] = {
+                "@id" : "abox:"+connection.getSourceId()
+            };
     }
 
     // add the unit's JSON-LD individual

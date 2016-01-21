@@ -3,7 +3,7 @@
 $( document ).ready(function() {
 
 	$("#cssmenu").on("click", "li[id^='menu-scenario-']", function() {
-		$('#lname').text($( this ).find('span').text() );
+		$('#lname').text($( this ).find('span.title').text() );
 	});
 	
 	$("#menuScenarios").on("click", "ul", function() {
