@@ -117,16 +117,11 @@ function formatUnitIcons(selectedInfo) {
     var contextClasses = contextList.getClasses();
     var classIndex = getFirstMatchingClassIndex(selectedInfo, contextClasses);
     var classNameTranslation = translate_contextClass(contextClasses[classIndex]);
+    var contextInformationTranslation = translate_contextInformation(selectedInfoID);
 
-    return (
-        // find the right context information in icon dictionary
-        '<img src="' + contextIconSrcDictionary[selectedInfoID] + '" width="15" height="15" title="' +
-                translate_contextInformation(selectedInfoID) + '" contextInfoID="' + selectedInfoID + '">'
-        ||
-    // no icon was found --> return context class icon
-    '<img src="img/context-classes/' + classNameTranslation + '.png" width="15" height="15" title="' +
-    translate_contextInformation(selectedInfoID) + '" contextInfoID="' + selectedInfoID + '">'
-    );
+    return typeof contextInformationTranslation != "undefined" ? '<img src="' + contextIconSrcDictionary[selectedInfoID] + '" width="15" height="15" title="' +
+    translate_contextInformation(selectedInfoID) + '" contextInfoID="' + selectedInfoID + '">' : '<img src="img/context-classes/' + classNameTranslation + '.png" width="15" height="15" title="' +
+    translate_contextInformation(selectedInfoID) + '" contextInfoID="' + selectedInfoID + '">';
 }
 
 
