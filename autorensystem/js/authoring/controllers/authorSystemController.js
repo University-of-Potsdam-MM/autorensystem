@@ -13,7 +13,6 @@ function initLoader() {
         url: "/loadData",
         type: "POST",
         success: function(response) {
-            console.log(response);
             // saved data was found
             if (response != "NO_SAVED_DATA") {
                 var loadedData = JSON.parse(response);
@@ -130,17 +129,21 @@ function loadSavedScenario(theScenario) {
                 outlineColor: "transparent",
                 outlineWidth: 4
             },
-            overlays: [["Label", {
-                label: theConnection.getLabel(),
-                id: "label",
-                cssClass: "aLabel" }]]
+            overlays: [
+                ["Label", {
+                    label: theConnection.getLabel(),
+                    id: "label",
+                    cssClass: "aLabel"
+                }]
+            ]
         });
 
         // set title for label
-        c.id = theConnection.getID();
         var label = c.getOverlay("label");
         var labelID = $(label)[0].canvas.id;
         $("#" + labelID)[0].setAttribute("title", theConnection.getTitle());
+
+        theConnection.setID(c.id);
     });
 
     // activate quick add learning unit button (little navbar right)

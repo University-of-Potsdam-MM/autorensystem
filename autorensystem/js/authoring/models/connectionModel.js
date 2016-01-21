@@ -40,6 +40,7 @@ Connection.prototype.getSourceId = function() {
 Connection.prototype.getTargetId = function() {
     return this._targetId;
 };
+
 Connection.prototype.getLabel = function() {
     return this._label;
 };
