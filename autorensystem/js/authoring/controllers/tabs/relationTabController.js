@@ -66,8 +66,8 @@ function fillRelationTab(connection) {
     // test 'if (label.id == "label")' is obsolete since jsPlumb hands in parameter c : Connection
 
     // add names in relations labels
-    $("#preLabelRelations").html(sourceUnit.getName() + " ist eine");
-    $("#postLabelRelations").html("für " + targetUnit.getName());
+    $("#preLabelRelations").html("\"" + sourceUnit.getName() + "\"<br> hat die");
+    $("#postLabelRelations").html("\"" + targetUnit.getName() + "\".");
 
     // clear markings from connection labels
     clearMarkingFromConnections();
