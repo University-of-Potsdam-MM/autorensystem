@@ -806,6 +806,8 @@ function formatMultiContextInfosElements() {
             // and use it to get at the whole context info data object
             var thisContextInfo = authorSystemContent.getUnitByUUID(currentUnitUUID).getContextData()[unitContextIndex];
 
+            showDetailContextInfo();
+
             // then reconstruct its values in the context details tab
             reconstructContextDetailsTab(thisContextInfo);
 
@@ -833,6 +835,7 @@ function reconstructContextDetailsTab(contextInfo) {
 
     var contextID = contextInfo.getID();
     // 1. the context information type selection:
+    fillSelectionContextInformation(contextInfo);
     var selectIndex = contextList.getIndexByID(contextID);
     $("#selectContextInfos").select2("data", {
         id:selectIndex,
@@ -840,6 +843,7 @@ function reconstructContextDetailsTab(contextInfo) {
     });
 
     // 2. the operator selection:
+    fillOperatorSelection(contextInfo);
     var chosenOperator = contextInfo.getChosenOperator();
     $("#selectOperator").select2("data", {
         id:contextInfo.getOperators().indexOf(chosenOperator),
