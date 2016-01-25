@@ -6,6 +6,13 @@ function grid2json () {
 		var unitID = currentUnitUUID;
 		var ratioHeight 	= 	$('#gridcontainer').data('ratioheight'); // TODO-Rechtschreibung
 		var ratioWidth 		= 	$('#gridcontainer').data('ratiowidth');
+		
+			
+		//var ratioHeight 	= 	$('#gridcontainer').attr('data-ratioheight'); // TODO-Rechtschreibung
+		//var ratioWidth 		= 	$('#gridcontainer').attr('data-ratiowidth');
+		
+		console.log("HEIGHT AND WIDTH: " + ratioHeight + ' ' + ratioWidth);
+		
 		var padding 		=   $('#gridcontainer').data('padding'); // TODO
 		var border	 		= 	$('#gridcontainer').data('showborders');
 		//var gridids 		= 	$('#gridcontainer').find('.gridelement');
@@ -103,9 +110,17 @@ function grid2json () {
 function json2grid(inputjson) {
 		//var inputjson = jQuery.parseJSON(gridjson);
 		
+		var ratioHeight = inputjson.ratioHeight;
+		var ratioWidth  = inputjson.ratioWidth;
+		
 		$('#gridcontainer').html('');
-		$('#gridcontainer').data('ratioheight', inputjson.ratioHeight );
-		$('#gridcontainer').data('ratiowidth',  inputjson.ratioWidth );	
+		$('#gridcontainer').data('ratioheight', ratioHeight );
+		$('#gridcontainer').data('ratiowidth',  ratioWidth);	
+		
+		
+		console.log("setratioslider(" + ratioWidth + ", " + ratioHeight + ")");
+		
+		setratioslider(ratioWidth, ratioHeight);
 		
 		
 		var uploadstring = '<form class="uploadform" action="/upload" method="post" enctype   =  "multipart/form-data"><input type="file" name="mediaelement" /><button type="submit" id="upload-button">Upload</button></form>'

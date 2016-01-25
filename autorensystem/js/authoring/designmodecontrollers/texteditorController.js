@@ -53,7 +53,9 @@
 				updateHTML();
 				//$('#'+currentmarkedid).find('.textmediaoutput').html(CKEDITOR.instances.cktexteditor.getData());
 				//CKEDITOR.instances[i].updateElement() ;
-			});              
+			});  
+
+             
         }
    });
 

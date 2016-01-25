@@ -74,6 +74,8 @@ function markmediaelement(id) {
 		case 'text':
 			$('#textoptionmenu').show();
 			texttoeditor();
+			resizegridcontainer();
+			$('#'+id).css({'background-image' : 'none'});
 			break;
 		case 'picture':
 			//filename = 'picture';
@@ -132,7 +134,7 @@ function initmediaelementfunctions() {
 					}
 					if (currentdraggedtype == 'picture') {
 						$( this ).html('<div class="mediaelement" id="'+tempid+'" data-mediavalue="picture"></div>');
-						$('#'+tempid).css({'background-color' : 'LightBlue'});
+						//$('#'+tempid).css({'background-color' : 'LightBlue'});
 						$('#'+tempid).css({'background-image' : "url('img/designmode/bg-pic.png')"});
 						//$('#'+tempid).css({'background' : 'LightBlue'});
 						//binduploadlistener(tempid, 'pictureelement');

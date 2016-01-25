@@ -46,15 +46,22 @@
 		hidemarker();
 		//var elementidofcurrentrow = contextmenugridsource; 
 		var rowelements = getmyrow(elementidofcurrentrow);
-		var newgridelementwidth = 100/rowelements.length;
-		var onehundredpercentcounter = 100;
+		var summedwidth = 0;
+		
+		for (var i in rowelements) {
+			summedwidth += parseFloat($('#'+rowelements[i])[0].style.width)
+		}
+		var firstelementleft = parseFloat($('#'+rowelements[0])[0].style.left);
+		
+		var newgridelementwidth = Math.round((summedwidth/rowelements.length)*10) /10;
+		var onehundredpercentcounter = summedwidth;
 		//console.log('rowelements: ' + rowelements);
 		//console.log($(this).attr('id') + '  ' + gridelementid + ':  ' + direccion);
 		console.log('newgridelementwidth: ' + newgridelementwidth);
 		alert('laenge: ' + rowelements.length);
 		for (i=0; i<rowelements.length; i++) {
 			console.log('rowelements.length: ' + rowelements.length);
-			$('#'+rowelements[i]).css('left', newgridelementwidth*i + '%');
+			$('#'+rowelements[i]).css('left', newgridelementwidth*i + firstelementleft + '%');
 			if (i<rowelements.length-1) {
 				$('#'+rowelements[i]).css('width', newgridelementwidth + '%');
 				//$('#'+rowelements[i]).css('max-width', newgridelementwidth + '%');
@@ -127,7 +134,7 @@
 			  processData: false,
 			  contentType: false,
 			  success: function(data){ 
-				//alert('<img src="'+data+'">');
+				//alert('<img src="'+data+'">');				
 				if (classname == "pictureelement") {
 					$('#'+id).html('<img src="/uploads/'+data+'" class="'+classname+'">');
 					document.getElementById('picfileinput').value='';
@@ -142,7 +149,8 @@
 					$('#'+id).html('<audio class="soundelelement" controls="controls"><source src="/uploads/'+data+'" type="audio/mpeg">Your browser does not support the audio tag.</audio><div class="infobarmedia"></div>');
 					document.getElementById('soundfileinput').value="";
 				}
-				
+				$('#'+id).css('background-image', 'none');
+				//$('#'+id).css('background-color', 'transparent');
 				updateHTML();
 				//$('.uploadform').reset();
 				//document.getElementById(".uploadform").reset();
@@ -972,10 +980,16 @@
 		var otherelementwidth  	= parseFloat(otherelement[0].style.width);
 		var deletedelementheight = parseFloat(deletedelement[0].style.height);
 		var otherelementheight 	= parseFloat(otherelement[0].style.height);
-		var deletedelementleft	= (deletedelement.position().left 	/ $('#gridcontainer').width()) 	* 100;
-		var deletedelementtop	= (deletedelement.position().top  	/ $('#gridcontainer').height()) * 100;
-		var otherelementleft	= (otherelement.position().left 	/ $('#gridcontainer').width()) 	* 100;
-		var otherelementtop		= (otherelement.position().top  	/ $('#gridcontainer').height()) * 100;
+		var gridcontainerheight = parseFloat($('#gridcontainer')[0].style.height);
+		var gridcontainerwidth 	= parseFloat($('#gridcontainer')[0].style.width);
+		var deletedleft 		= parseFloat(deletedelement[0].style.left);
+		var deletedtop 			= parseFloat(deletedelement[0].style.top);
+		var othertop 			= parseFloat(otherelement[0].style.top);
+		var otherleft 			= parseFloat(otherelement[0].style.left);
+		//var deletedelementleft	= (deletedelement.position().left 	/ gridcontainerwidth)  * 100;
+		//var deletedelementtop	= (deletedelement.position().top  	/ gridcontainerheight) * 100;
+		//var otherelementleft	= (otherelement.position().left 	/  gridcontainerwidth) 	* 100;
+		//var otherelementtop		= (otherelement.position().top  	/  gridcontainerheight) * 100;
 		
 		
 	//	if (deletedelementheight == otherelementheight) {
@@ -987,8 +1001,10 @@
 			otherelement.css({'height-max' 	: (otherelementheight+deletedelementheight) +'%'});
 		}
 		
-		otherelement.css({'left' : Math.min(deletedelementleft, otherelementleft) + '%'}); 
-		otherelement.css({'top'  : Math.min(deletedelementtop,  otherelementtop) + '%'});
+		
+		console.log("LEFT: " + deletedleft + "; RIGHT: " + otherleft);
+		otherelement.css({'left' : Math.min(deletedleft, otherleft) + '%'}); 
+		otherelement.css({'top'  : Math.min(deletedtop,  othertop) + '%'});
 		
 		deletedelement.remove();
 		updateHTML();
