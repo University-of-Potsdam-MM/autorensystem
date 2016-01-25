@@ -72,7 +72,7 @@
 	function getneighboringdirection(testedelement, thiselement) {
 		neighboringdirection = 'undef';	
 		if (thiselement.attr('id') == testedelement.attr('id')) {
-			return undef;
+			return 'undef';
 		}
 		var thisTL = [ parseFloat(thiselement[0].style.top), parseFloat(thiselement[0].style.left) ];
 		var thisTR = [ parseFloat(thiselement[0].style.top), parseFloat(thiselement[0].style.left)+parseFloat(thiselement[0].style.width) ];
@@ -158,7 +158,8 @@
 	}
 	
 	
-	
+	// Gibt Liste alle Elemente aus, die sie sich mit dem Eingabe-Element in einer Reihe befinden (d.h. Nachbarn, Nachbarsnachbarn etc. mit der selben Hoehe)
+	// Liste in der Reihenfolge von links nach rechts
 	function getmyrow(gridelementid) {
 		var neighbor = '0';
 		var leftlist =	[];

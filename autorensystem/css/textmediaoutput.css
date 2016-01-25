@@ -9,6 +9,10 @@
 	background-color: #fff;
 
 	margin: 4px;
+	overflow:hidden;
+	text-overflow:clip;
+	max-width:100%;
+	max-height:100%;
 
 }
 
@@ -61,6 +65,14 @@
 {
 	font-weight: normal;
 	line-height: 1.2;
+	margin: 0;
+	border: 0;
+}
+
+.textmediaoutput h1
+{
+	/*font-size: 20px;*/
+	font-size: 200%;
 }
 
 .textmediaoutput hr

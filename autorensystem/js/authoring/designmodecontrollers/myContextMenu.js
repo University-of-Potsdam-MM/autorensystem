@@ -62,12 +62,12 @@ function initcontextmenu() {
 	function creategridelementcontextmenu(thisgridelement,e) {
 		var neighbors = getmyneighbors(thisgridelement);
 		var thisid = thisgridelement.attr('id');
-		out='<div id="contextmenugridcontainer" class="mycontextmenu" style="left:'+e.pageX+'px;top:'+e.pageY+'px"><ul>';
+		var out='<div id="contextmenugridcontainer" class="mycontextmenu" style="left:'+e.pageX+'px;top:'+e.pageY+'px"><ul>';
 		$(neighbors).each( function() {
 			directionoutput = directiontranslatorakkusativ(getneighboringdirection($(this),thisgridelement));	
 			out=out+'<li onclick="deletegridelement(\''+$(thisgridelement).attr('id')+'\', \''+ $(this).attr('id') +'\')">L&ouml;sche zugunsten des ' +directionoutput+' Elements</li>';
 		});
-		//out = out+'<li onclick="spaltengleichmaessigverteilen(\''+thisid+'\')">Spalte gleichm&auml;&szlig;ig verteilen</li>';
+		out = out+'<li onclick="spaltengleichmaessigverteilen(\''+thisid+'\')">Spalte gleichm&auml;&szlig;ig verteilen</li>';
 		out=out+'</ul></div>';
 		return out;
 	}

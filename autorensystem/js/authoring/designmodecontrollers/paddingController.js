@@ -20,3 +20,5 @@
 		var padding = $('.gridcontainer').data('gridpadding');
 		$('.gridelement').css('padding', input+'%');
 	}
+	
+	
