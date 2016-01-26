@@ -422,6 +422,18 @@ function fillInputField(ci) {
             selectPossibleValuesElement.append(option1);
             selectPossibleValuesElement.append(option0);
 
+            // set selection to none or last choice (if we are in edit mode)
+            if (chosenValue == "") {
+                selectPossibleValuesElement.select2("data", {id:"\r",text:"\r"});
+            }
+            else {
+                selectPossibleValuesElement.select2("data", {
+                    id: chosenValue == "TRUE" ? 1 : 0,
+                    text: chosenValue == "TRUE" ? "wahr" : "falsch"
+                });
+            }
+
+
             break;
     }
 }
