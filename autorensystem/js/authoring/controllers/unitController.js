@@ -19,7 +19,7 @@ function createUnit() {
     var newState = buildUnitDOM(uuid, stateName);
 
     // if the unit name was written and enter was pressed
-    stateName.keyup(function(e) {
+    stateName.keyup(function (e) {
 
         if (e.keyCode == 13) {
 
@@ -105,9 +105,7 @@ function loadUnit(unit, j) {
 
     // get all meta data
     var unitMetaData = unit.getMetaData();
-    for (var i in unitMetaData)
-        addMetaDataToUnit(unitMetaData[i], $("#"+unit.getUUID()));
-
+    for (var i in unitMetaData) addMetaDataToUnit(unitMetaData[i], $("#" + unit.getUUID()));
 
     // place unit in state machine
     $(newState).css("top", unit.getPosY() + "px");
@@ -119,7 +117,6 @@ function loadUnit(unit, j) {
     plumbUnit(newState);
     // set event handler listening for click
     initUnitClickEventHandler();
-
 }
 
 // set properties for newly created unit in jsPlumb instance
@@ -131,7 +128,7 @@ function plumbUnit(newState) {
         //containment: 'parent'
         containment: '.body',
         // triggered if unit was dragged
-        stop: function(event) {
+        stop: function (event) {
             currentUnitUUID = event.el.id;
             var current_unit = authorSystemContent.getUnitByUUID(currentUnitUUID);
             var unitElement = $("#" + currentUnitUUID)[0];
@@ -151,7 +148,7 @@ function plumbUnit(newState) {
     // set target point
     inst.makeTarget(newState, {
         anchor: "Continuous",
-        dropOptions: { hoverClass: "dragHover" },
+        dropOptions: {hoverClass: "dragHover"},
         allowLoopback: false
     });
 
@@ -173,10 +170,10 @@ function plumbUnit(newState) {
  * Sets click event handler for every newly created unit.
  * NOTE: Event handler cannot be set at document load, because units do not exist then.
  */
-function initUnitClickEventHandler () {
+function initUnitClickEventHandler() {
 
     // triggered if learning unit is clicked
-    $("#stm").children("div.w").click(function(event) {
+    $("#stm").children("div.w").click(function (event) {
 
         // update global variable: UUID of the clicked unit
         currentUnitUUID = $(this)[0].getAttribute("id");
@@ -230,8 +227,8 @@ function addMetaDataToUnit(metaDatum, unit) {
     // update JSON structure
     var current_unit = authorSystemContent.getUnitByUUID(currentUnitUUID);
     current_unit.addMetaInfo({
-        name : metaDatum,
-        icon : metaIcon
+        name: metaDatum,
+        icon: metaIcon
     });
 
     // create meta data DOM
@@ -276,7 +273,7 @@ function removeMetaDataFromUnit(metaDatum, unit) {
 
     // find the right meta icon
     var metaDataIcons = $(unit).find("div.unit-meta-icons");
-    metaDataIcons.each(function() {
+    metaDataIcons.each(function () {
         // remove the right icon from unit
         if ($(this)[0].title == metaDatum) {
             this.remove();
@@ -334,7 +331,6 @@ function removeUnitFromScenario(unitUUID, scenarioName) {
     // hide tab content and un-select all tabs in right panel
     deactivateAllTabs();
 }
-
 
 
 /**

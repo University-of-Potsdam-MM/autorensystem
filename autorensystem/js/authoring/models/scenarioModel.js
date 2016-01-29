@@ -99,6 +99,34 @@ Scenario.prototype.getConnections = function() {
     return this._connections;
 };
 
+/**
+ *
+ * @param uuid
+ */
+Scenario.prototype.getSourceConnectionsForUnitByUUID = function(uuid) {
+    var connections = [];
+
+    this.getConnections().forEach(function(theConnection) {
+        if (theConnection.hasSource(uuid)) connections.push(theConnection);
+    });
+
+    return connections;
+};
+
+/**
+ *
+ * @param uuid
+ */
+Scenario.prototype.getTargetConnectionsForUnitByUUID = function(uuid) {
+    var connections = [];
+
+    this.getConnections().forEach(function(theConnection) {
+        if (theConnection.hasTarget(uuid)) connections.push(theConnection);
+    });
+
+    return connections;
+};
+
 Scenario.prototype.addConnection = function(conn) {
     this._connections.push(conn);
 };

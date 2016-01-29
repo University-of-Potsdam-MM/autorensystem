@@ -1,5 +1,13 @@
 $(function() {
 
+	$("#cssmenu").on("click", "li[id^='menu-scenario-']", function() {
+		$('#lname').text($( this ).find('span.title').text() );
+	});
+
+	$("#menuScenarios").on("click", "ul", function(e) {
+
+	});
+
 	$('#cssmenu li.has-sub>a').on('click', function(){
 		$(this).removeAttr('href');
 		var element = $(this).parent('li');
@@ -77,7 +85,7 @@ function changeScenarioNameInMenu(oldName, newName) {
 
 function addUnitToMenu(nameCurrentScenario) {
 	var liCurrentScenario;
-	var currentUnitName = authorSystemContent.getUnitByUUID(currentUnitUUID).getName();
+	var theUnit = authorSystemContent.getUnitByUUID(currentUnitUUID);
 
 	// find correct scenario in menu
 	$("span.title").each(function() {
@@ -93,6 +101,8 @@ function addUnitToMenu(nameCurrentScenario) {
 	var spanNewUnit = $("<span>");
 	liCurrentScenario = liCurrentScenario.parent("a").parent("li");
 
+	console.log(liNewUnit);
+
 	// necessary if the running scenario has a unit already
 	if (liCurrentScenario.hasClass("has-sub")) {
 
@@ -100,7 +110,7 @@ function addUnitToMenu(nameCurrentScenario) {
 		ulCurrentScenario = liCurrentScenario.children("ul");
 
 		// add unit in menu bar
-		spanNewUnit[0].innerText = currentUnitName;
+		spanNewUnit[0].innerText = theUnit.getName();
 		aNewUnit.append(spanNewUnit);
 		liNewUnit.append(aNewUnit);
 		ulCurrentScenario.append(liNewUnit);
@@ -118,7 +128,7 @@ function addUnitToMenu(nameCurrentScenario) {
 		liCurrentScenario.addClass("has-sub");
 
 		// append content name on DOM
-		spanNewUnit[0].innerText = currentUnitName;
+		spanNewUnit[0].innerText = theUnit.getName();
 		aNewUnit.append(spanNewUnit);
 		liNewUnit.append(aNewUnit);
 		ulCurrentScenario.append(liNewUnit);

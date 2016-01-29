@@ -94,7 +94,7 @@ function loadSavedScenario(theScenario) {
 
         // put all units in scenario in menu bar
         theScenario.getUnits().forEach(function(theUnit) {
-            var liUnit = $("<li>").addClass("last");
+            var liUnit = $("<li>");
             var aUnit = $("<a>").attr("href", "#");
             var spanUnit = $("<span>");
 
@@ -103,7 +103,31 @@ function loadSavedScenario(theScenario) {
             aUnit.append(spanUnit);
             liUnit.append(aUnit);
             ulScenario.append(liUnit);
+
+            var ulUnit = $("<ul>").attr("style", "display:block");
+
+            // add context information
+            theUnit.getContextData().forEach(function(theContextData) {
+                console.log(translate_contextClass(theContextData.getClasses()[0]));
+                ulUnit.append("<li><a class='fui-info-circle'> "+theContextData.getTranslatedID()+"</a></li>");
+                liUnit.addClass("has-sub");
+            });
+
+            // add source relations
+            theScenario.getSourceConnectionsForUnitByUUID(theUnit.getUUID()).forEach(function(theConnection) {
+                ulUnit.append("<li><a class='fui-arrow-left'> "+theScenario.getUnitByUUID(theConnection.getTargetId()).getName()+" ("+theConnection.getLabel()+")</a></li>");
+                liUnit.addClass("has-sub");
+            });
+
+            // add target relations
+            theScenario.getTargetConnectionsForUnitByUUID(theUnit.getUUID()).forEach(function(theConnection) {
+                ulUnit.append("<li><a class='fui-arrow-right'> "+theScenario.getUnitByUUID(theConnection.getSourceId()).getName()+" ("+theConnection.getLabel()+")</a></li>");
+                liUnit.addClass("has-sub");
+            });
+
+            liUnit.append(ulUnit);
         });
+
 
         liScenario.append(ulScenario);
     }

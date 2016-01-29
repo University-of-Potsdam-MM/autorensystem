@@ -1,18 +1,6 @@
 
 
 $( document ).ready(function() {
-
-	$("#cssmenu").on("click", "li[id^='menu-scenario-']", function() {
-		$('#lname').text($( this ).find('span.title').text() );
-	});
-	
-	$("#menuScenarios").on("click", "ul", function() {
-		console.log("hallo");
-		var currentunitname = $( this ).find('span').text();
-		//currentUnitUUID = 
-		//$('#lname').text($( this ).find('span').text() );
-		console.log(currentunitname);
-	});
 	
 	$("#saveScenario").on("click", function() {
 		//save();

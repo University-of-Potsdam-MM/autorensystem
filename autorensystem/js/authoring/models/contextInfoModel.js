@@ -41,6 +41,10 @@ ContextInformation.prototype.getID = function () {
     return this._id;
 };
 
+ContextInformation.prototype.getTranslatedID = function() {
+    return translate_contextInformation(this._id);
+};
+
 ContextInformation.prototype.getClasses = function () {
     return this._classes;
 };
