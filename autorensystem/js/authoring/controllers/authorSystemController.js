@@ -108,7 +108,6 @@ function loadSavedScenario(theScenario) {
 
             // add context information
             theUnit.getContextData().forEach(function(theContextData) {
-                console.log(translate_contextClass(theContextData.getClasses()[0]));
                 ulUnit.append("<li><a class='fui-info-circle'> "+theContextData.getTranslatedID()+"</a></li>");
                 liUnit.addClass("has-sub");
             });
